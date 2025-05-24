@@ -1,0 +1,120 @@
+{
+  "name": "quick-command",
+  "displayName": "Quick Command",
+  "description": "コマンドを効率的に管理・実行するVS Code拡張機能",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:quick-command.showPanel",
+    "onCommand:quick-command.showCommandList"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "quick-command.showPanel",
+        "title": "Quick Command: パネルを表示"
+      },
+      {
+        "command": "quick-command.showCommandList",
+        "title": "Quick Command: コマンドリストを表示"
+      },
+      {
+        "command": "quick-command.addCommand",
+        "title": "Quick Command: コマンドを追加"
+      },
+      {
+        "command": "quick-command.executeCommand",
+        "title": "Quick Command: コマンドを実行"
+      },
+      {
+        "command": "quick-command.deleteCommand",
+        "title": "Quick Command: コマンドを削除"
+      },
+      {
+        "command": "quick-command.toggleFavorite",
+        "title": "Quick Command: お気に入り切り替え"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "quick-command.showCommandList",
+        "key": "ctrl+shift+k",
+        "mac": "cmd+shift+k"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "quickCommandPanel",
+          "name": "Quick Command",
+          "when": "true"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "quickCommandPanel",
+        "contents": "コマンドを管理してください。\n[コマンドを追加](command:quick-command.addCommand)"
+      }
+    ],
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "quick-command.executeCommand",
+          "when": "view == quickCommandPanel && viewItem == quickCommand",
+          "group": "inline@1"
+        },
+        {
+          "command": "quick-command.toggleFavorite",
+          "when": "view == quickCommandPanel && viewItem == quickCommand",
+          "group": "inline@2"
+        },
+        {
+          "command": "quick-command.deleteCommand",
+          "when": "view == quickCommandPanel && viewItem == quickCommand",
+          "group": "inline@3"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch",
+    "test": "jest",
+    "lint": "eslint src --ext ts,tsx",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx}\""
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "16.x",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/jest": "^29.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "css-loader": "^6.7.0",
+    "eslint": "^8.28.0",
+    "eslint-plugin-react": "^7.31.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "html-webpack-plugin": "^5.5.0",
+    "jest": "^29.0.0",
+    "prettier": "^2.8.0",
+    "style-loader": "^3.3.0",
+    "ts-jest": "^29.0.0",
+    "ts-loader": "^9.4.0",
+    "typescript": "^4.9.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.0"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
