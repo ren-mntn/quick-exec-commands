@@ -101,6 +101,10 @@
       {
         "command": "quick-command.createSampleCommands",
         "title": "%command.createSampleCommands%"
+      },
+      {
+        "command": "quick-command.createDemoCommands",
+        "title": "%command.createDemoCommands%"
       }
     ],
     "keybindings": [

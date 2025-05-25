@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { CommandManager } from './commands/commandManager';
+import { createDemoCommands } from './commands/demoCommands';
 import { QuickCommandProvider } from './providers/quickCommandProvider';
 import { QuickCommand } from './types';
 import { WebviewProvider } from './webview/webviewProvider';
@@ -812,6 +813,15 @@ Storage Keys:
             }`
           );
         }
+      }
+    ),
+
+    // デモ用コマンド作成（GIF制作用）
+    vscode.commands.registerCommand(
+      'quick-command.createDemoCommands',
+      async () => {
+        await createDemoCommands(commandManager);
+        quickCommandProvider.refresh();
       }
     ),
 
