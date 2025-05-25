@@ -85,7 +85,7 @@ _`Ctrl+Alt+Q` でコマンドパレット風に即アクセス_
 
 **方法 1: VS Code 内でインストール**
 
-1. `Ctrl+Shift+X` (Windows/Linux) または `Ctrl+Alt+Q` (Mac) で拡張機能パネルを開く
+1. `Ctrl+Alt+Q` で拡張機能パネルを開く
 2. "Quick Execute Commands" で検索
 3. 「インストール」をクリック
 
