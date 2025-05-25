@@ -10,7 +10,7 @@
 
 ## 🚀 **ショートカットキーの悩み、もう終わり！**
 
-**たった 1 つのショートカット** `Cmd+Shift+X` だけ覚えれば、あなたのすべてのコマンドにアクセス可能！
+**たった 1 つのショートカット** `Ctrl+Alt+Q` だけ覚えれば、あなたのすべてのコマンドにアクセス可能！
 
 ---
 
@@ -68,7 +68,7 @@ _整理されたコマンド一覧で、マウスクリックで実行_
 ### **⚡ クイックアクセス（ショートカット）**
 
 ![Quick Access Demo](./demos/quick-access-demo.gif)
-_`Cmd+Shift+X` でコマンドパレット風に即アクセス_
+_`Ctrl+Alt+Q` でコマンドパレット風に即アクセス_
 
 ---
 
@@ -87,7 +87,7 @@ _`Cmd+Shift+X` でコマンドパレット風に即アクセス_
 
 **方法 1: VS Code 内でインストール**
 
-1. `Ctrl+Shift+X` (Windows/Linux) または `Cmd+Shift+X` (Mac) で拡張機能パネルを開く
+1. `Ctrl+Shift+X` (Windows/Linux) または `Ctrl+Alt+Q` (Mac) で拡張機能パネルを開く
 2. "Quick Execute Commands" で検索
 3. 「インストール」をクリック
 
@@ -96,7 +96,7 @@ _`Cmd+Shift+X` でコマンドパレット風に即アクセス_
 
 ### ⚡ **クイックスタート**
 
-1. **起動** → `Cmd+Shift+X` でコマンド一覧表示
+1. **起動** → `Ctrl+Alt+Q` でコマンド一覧表示
 2. **登録** → 「➕ コマンド追加」でよく使うコマンドを追加
 3. **実行** → コマンドを選択するだけ！
 
@@ -147,7 +147,7 @@ A VS Code extension for efficiently managing and executing both **terminal comma
 1. **Command Palette**: Run `Quick Execute Commands: Show Panel`
 2. **Sidebar**: Use the Quick Execute Commands panel
 3. **Keyboard Shortcuts**:
-   - `Ctrl+Shift+X` (Windows/Linux) or `Cmd+Shift+X` (Mac) - Show command list
+   - `Ctrl+Shift+X` (Windows/Linux) or `Ctrl+Alt+Q` (Mac) - Show command list
    - `Ctrl+Shift+F` (Windows/Linux) or `Cmd+Shift+F` (Mac) - Search commands
 
 ### Adding Commands

@@ -40,7 +40,7 @@ README で使用する GIF ファイルの要件をまとめました。
 **要件:** ショートカットキーでのクイックアクセス
 **内容:**
 
-- `Cmd+Shift+X` （または Ctrl+Shift+X）でコマンドパレット表示
+- `Ctrl+Alt+Q` （または Ctrl+Shift+X）でコマンドパレット表示
 - カテゴリ選択（Favorites, Global, Workspace）
 - フォルダのナビゲーション
 - コマンドの選択と実行
