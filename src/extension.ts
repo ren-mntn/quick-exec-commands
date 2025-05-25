@@ -133,6 +133,13 @@ export function activate(context: vscode.ExtensionContext) {
     const items = [];
 
     if (category === 'favorite') {
+      // 戻るボタンを追加
+      items.push({
+        label: '📂 .. (Back)',
+        description: 'Go back to categories',
+        type: 'back' as const,
+      });
+
       // お気に入りコマンドを表示
       const favoriteCommands = await commandManager.getFavoriteCommands();
       for (const cmd of favoriteCommands) {
@@ -491,10 +498,39 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       'quickExecCommands.toggleFavorite',
       async (commandItem: any) => {
+        console.log('[Extension] toggleFavorite called with:', commandItem);
+        console.log('[Extension] commandItem type:', typeof commandItem);
+        console.log(
+          '[Extension] commandItem keys:',
+          Object.keys(commandItem || {})
+        );
+
         // TreeItemの場合はquickCommandプロパティから取得
         const command = commandItem.quickCommand || commandItem;
-        await commandManager.toggleFavorite(command.id);
-        quickCommandProvider.refresh();
+        console.log('[Extension] resolved command:', command);
+        console.log('[Extension] command id:', command?.id);
+        console.log('[Extension] command name:', command?.name);
+        console.log('[Extension] command directory:', command?.directory);
+
+        if (!command || !command.id) {
+          vscode.window.showErrorMessage('コマンド情報が取得できませんでした');
+          return;
+        }
+
+        try {
+          await commandManager.toggleFavorite(command.id);
+          quickCommandProvider.refresh();
+          vscode.window.showInformationMessage(
+            `お気に入りを切り替えました: ${command.name || command.command}`
+          );
+        } catch (error) {
+          console.error('[Extension] toggleFavorite error:', error);
+          vscode.window.showErrorMessage(
+            `お気に入り切り替えエラー: ${
+              error instanceof Error ? error.message : 'Unknown error'
+            }`
+          );
+        }
       }
     ),
 
@@ -686,7 +722,34 @@ export function activate(context: vscode.ExtensionContext) {
     // デバッグ用コマンド - TreeViewの状態確認
     vscode.commands.registerCommand(
       'quickExecCommands.debugTreeView',
-      async () => {
+      async (commandItem?: any) => {
+        // 特定のコマンドが選択されている場合はそのデバッグ情報を表示
+        if (commandItem) {
+          console.log(
+            '[Extension] debugTreeView called with specific item:',
+            commandItem
+          );
+          const command = commandItem.quickCommand || commandItem;
+          if (command) {
+            const debugInfo = {
+              id: command.id,
+              name: command.name,
+              command: command.command,
+              directory: command.directory,
+              category: command.category,
+              isFavorite: command.isFavorite,
+              commandType: command.commandType,
+              contextValue: commandItem.contextValue,
+              itemType: typeof commandItem,
+            };
+            console.log('[Extension] Command debug info:', debugInfo);
+            vscode.window.showInformationMessage(
+              `Debug Info: ${JSON.stringify(debugInfo, null, 2)}`,
+              { modal: true }
+            );
+          }
+          return;
+        }
         const globalCommands = commandManager.getGlobalCommands();
         const workspaceCommands = commandManager.getWorkspaceCommands();
         const globalDirectories = commandManager.getGlobalDirectories();

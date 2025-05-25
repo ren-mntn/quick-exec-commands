@@ -226,12 +226,34 @@ export class CommandTreeItem extends vscode.TreeItem {
     this.description = this.createDescription();
     this.contextValue = 'quickCommand';
 
+    // お気に入り状態に応じたアイコンを設定
+    this.iconPath = this.getCommandIcon();
+
     // コマンド実行のためのcommandを設定
     this.command = {
       command: 'quickExecCommands.executeFromTreeView',
       title: 'Execute Command',
       arguments: [this.quickCommand],
     };
+
+    // デバッグ情報をログに出力
+    console.log('[CommandTreeItem] Created command item:', {
+      id: this.quickCommand.id,
+      name: this.quickCommand.name,
+      directory: this.quickCommand.directory,
+      contextValue: this.contextValue,
+      isFavorite: this.quickCommand.isFavorite,
+    });
+  }
+
+  private getCommandIcon(): vscode.ThemeIcon {
+    if (this.quickCommand.isFavorite) {
+      return new vscode.ThemeIcon('star-full');
+    } else if (this.quickCommand.commandType === 'vscode') {
+      return new vscode.ThemeIcon('symbol-method');
+    } else {
+      return new vscode.ThemeIcon('terminal');
+    }
   }
 
   private createTooltip(): string {

@@ -175,8 +175,13 @@
       "view/item/context": [
         {
           "command": "quickExecCommands.toggleFavorite",
-          "when": "view == quickCommandPanel && viewItem == quickCommand",
+          "when": "view == quickCommandPanel && viewItem =~ /quickCommand/",
           "group": "inline@1"
+        },
+        {
+          "command": "quickExecCommands.debugTreeView",
+          "when": "view == quickCommandPanel && viewItem =~ /quickCommand/",
+          "group": "debug@1"
         },
         {
           "command": "quickExecCommands.addCommandToDirectory",
@@ -195,12 +200,12 @@
         },
         {
           "command": "quickExecCommands.editCommand",
-          "when": "view == quickCommandPanel && viewItem == quickCommand",
+          "when": "view == quickCommandPanel && viewItem =~ /quickCommand/",
           "group": "command@1"
         },
         {
           "command": "quickExecCommands.deleteCommand",
-          "when": "view == quickCommandPanel && viewItem == quickCommand",
+          "when": "view == quickCommandPanel && viewItem =~ /quickCommand/",
           "group": "command@2"
         },
         {
