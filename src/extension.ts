@@ -637,17 +637,56 @@ export function activate(context: vscode.ExtensionContext) {
       const globalDirectories = commandManager.getGlobalDirectories();
       const workspaceDirectories = commandManager.getWorkspaceDirectories();
 
+      // ストレージキーの確認
+      const globalKeys = context.globalState.keys();
+      const workspaceKeys = context.workspaceState.keys();
+
+      const debugInfo = {
+        globalCommands: globalCommands.map((cmd) => ({
+          id: cmd.id,
+          name: cmd.name,
+          command: cmd.command,
+        })),
+        workspaceCommands: workspaceCommands.map((cmd) => ({
+          id: cmd.id,
+          name: cmd.name,
+          command: cmd.command,
+        })),
+        globalDirectories: globalDirectories.map((dir) => ({
+          id: dir.id,
+          name: dir.name,
+          path: dir.path,
+        })),
+        workspaceDirectories: workspaceDirectories.map((dir) => ({
+          id: dir.id,
+          name: dir.name,
+          path: dir.path,
+        })),
+        storageKeys: {
+          global: globalKeys,
+          workspace: workspaceKeys,
+        },
+      };
+
+      console.log('=== Quick Command Debug Info ===');
+      console.log(JSON.stringify(debugInfo, null, 2));
+
       const message = `
-TreeView Debug Info:
-- Global Commands: ${globalCommands.length}
-- Workspace Commands: ${workspaceCommands.length}
-- Global Directories: ${globalDirectories.length}
-- Workspace Directories: ${workspaceDirectories.length}
-- Total Commands: ${globalCommands.length + workspaceCommands.length}
+Quick Command Debug Info:
+- Global Commands: ${globalCommands.length}個
+- Workspace Commands: ${workspaceCommands.length}個
+- Global Directories: ${globalDirectories.length}個  
+- Workspace Directories: ${workspaceDirectories.length}個
+- Total Commands: ${globalCommands.length + workspaceCommands.length}個
+
+Storage Keys:
+- Global: ${globalKeys.join(', ')}
+- Workspace: ${workspaceKeys.join(', ')}
+
+詳細はコンソール（開発者ツール）を確認してください。
       `;
 
-      console.log(message);
-      vscode.window.showInformationMessage(message);
+      vscode.window.showInformationMessage(message, { modal: true });
 
       // TreeViewを強制的にリフレッシュ
       quickCommandProvider.refresh();

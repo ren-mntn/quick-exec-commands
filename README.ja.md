@@ -1,6 +1,6 @@
-# Quick Command
+# Quick Execute Commands
 
-![Quick Command](./asset/top.webp)
+![Quick Execute Commands](./asset/top.webp)
 
 VS Code でコマンドを効率的に管理・実行するための拡張機能です。**ターミナルコマンド**と **VS Code 内部コマンド**の両方をサポートし、統一されたインターフェースで管理できます。
 
@@ -39,8 +39,8 @@ VS Code でコマンドを効率的に管理・実行するための拡張機能
 
 ### 基本操作
 
-1. **コマンドパレット**から `Quick Command: パネルを表示` を実行
-2. **サイドバー**の Quick Command パネルを使用
+1. **コマンドパレット**から `Quick Execute Commands: パネルを表示` を実行
+2. **サイドバー**の Quick Execute Commands パネルを使用
 3. **ショートカットキー**:
    - `Ctrl+Shift+X` (Windows/Linux) または `Cmd+Shift+X` (Mac) - コマンドリスト表示
    - `Ctrl+Shift+F` (Windows/Linux) または `Cmd+Shift+F` (Mac) - コマンド検索
@@ -187,7 +187,7 @@ npm install [パッケージ名]
 ### 検索機能
 
 ```
-1. コマンドパレット → "Quick Command: コマンド検索"
+1. コマンドパレット → "Quick Execute Commands: コマンド検索"
 2. キーワードを入力（名前、説明、タグで検索）
 3. 結果から実行したいコマンドを選択
 ```
@@ -207,7 +207,7 @@ npm install [パッケージ名]
 ### 実行履歴
 
 ```
-1. コマンドパレット → "Quick Command: 実行履歴表示"
+1. コマンドパレット → "Quick Execute Commands: 実行履歴表示"
 2. 過去の実行履歴から再実行（最大100件）
 ```
 
@@ -309,7 +309,7 @@ npm test -- --testNamePattern="integration"
 1. **ViewContainer の確認**
 
    - サイドバーのアクティビティバーに**ターミナルアイコン**が表示
-   - このアイコンをクリックして「Quick Command」パネルを開く
+   - このアイコンをクリックして「Quick Execute Commands」パネルを開く
 
 2. **拡張機能のリロード**
 
@@ -319,7 +319,7 @@ npm test -- --testNamePattern="integration"
 
 3. **サンプルデータの作成**
    ```
-   Command Palette → "Quick Command: サンプルコマンドを作成"
+   Command Palette → "Quick Execute Commands: サンプルコマンドを作成"
    ```
 
 ### よくある問題
@@ -336,7 +336,7 @@ npm test -- --testNamePattern="integration"
 
 3. **コマンドリストが空**
    - サンプルコマンド作成機能を実行
-   - デバッグ情報で状態を確認: `Command Palette → "Quick Command: TreeView デバッグ"`
+   - デバッグ情報で状態を確認: `Command Palette → "Quick Execute Commands: TreeView デバッグ"`
 
 ## 🤝 貢献
 
@@ -358,4 +358,4 @@ MIT License - 詳細は [LICENSE](LICENSE) ファイルを参照してくださ�
 
 ---
 
-**Quick Command** で VS Code でのコマンド実行をもっと効率的に！ 🚀
+**Quick Execute Commands** で VS Code でのコマンド実行をもっと効率的に！ 🚀

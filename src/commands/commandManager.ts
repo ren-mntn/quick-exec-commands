@@ -32,12 +32,23 @@ export class CommandManager {
 
   // グローバルコマンドの取得
   getGlobalCommands(): QuickCommand[] {
-    return this.context.globalState.get(this.globalStorageKey, []);
+    const commands = this.context.globalState.get(this.globalStorageKey, []);
+    console.log(
+      `[CommandManager] Loaded ${commands.length} global commands from storage`
+    );
+    return commands;
   }
 
   // ワークスペースコマンドの取得
   getWorkspaceCommands(): QuickCommand[] {
-    return this.context.workspaceState.get(this.workspaceStorageKey, []);
+    const commands = this.context.workspaceState.get(
+      this.workspaceStorageKey,
+      []
+    );
+    console.log(
+      `[CommandManager] Loaded ${commands.length} workspace commands from storage`
+    );
+    return commands;
   }
 
   // ディレクトリ別コマンドの取得
@@ -88,16 +99,28 @@ export class CommandManager {
       updatedAt: new Date(),
     };
 
+    console.log(
+      `[CommandManager] Adding command: ${
+        newCommand.name || newCommand.command
+      } (${newCommand.category})`
+    );
+
     if (command.category === 'global') {
       const commands = this.getGlobalCommands();
       commands.push(newCommand);
       await this.context.globalState.update(this.globalStorageKey, commands);
+      console.log(
+        `[CommandManager] Saved to global storage. Total: ${commands.length}`
+      );
     } else {
       const commands = this.getWorkspaceCommands();
       commands.push(newCommand);
       await this.context.workspaceState.update(
         this.workspaceStorageKey,
         commands
+      );
+      console.log(
+        `[CommandManager] Saved to workspace storage. Total: ${commands.length}`
       );
     }
 

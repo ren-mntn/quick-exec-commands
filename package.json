@@ -1,8 +1,8 @@
 {
-  "name": "quick-command",
-  "displayName": "Quick Command",
+  "name": "quick-exec-commands",
+  "displayName": "Quick Execute Commands",
   "description": "Efficiently manage and execute terminal & VS Code commands with a unified interface",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "icon": "asset/icon.webp",
   "engines": {
     "vscode": "^1.75.0"
@@ -23,11 +23,11 @@
   "publisher": "otter-botter",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ren-mntn/quick-command.git"
+    "url": "https://github.com/ren-mntn/quick-exec-commands.git"
   },
-  "homepage": "https://github.com/ren-mntn/quick-command#readme",
+  "homepage": "https://github.com/ren-mntn/quick-exec-commands#readme",
   "bugs": {
-    "url": "https://github.com/ren-mntn/quick-command/issues"
+    "url": "https://github.com/ren-mntn/quick-exec-commands/issues"
   },
   "license": "MIT",
   "main": "./dist/extension.js",

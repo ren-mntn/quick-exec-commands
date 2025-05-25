@@ -1,6 +1,6 @@
-# Quick Command
+# Quick Execute Commands
 
-![Quick Command](./asset/top.webp)
+![Quick Execute Commands](./asset/top.webp)
 
 > [📖 日本語版はこちら / Japanese Version](./README.ja.md)
 
@@ -42,8 +42,8 @@ A VS Code extension for efficiently managing and executing both **terminal comma
 
 ### Basic Usage
 
-1. **Command Palette**: Run `Quick Command: Show Panel`
-2. **Sidebar**: Use the Quick Command panel
+1. **Command Palette**: Run `Quick Execute Commands: Show Panel`
+2. **Sidebar**: Use the Quick Execute Commands panel
 3. **Keyboard Shortcuts**:
    - `Ctrl+Shift+X` (Windows/Linux) or `Cmd+Shift+X` (Mac) - Show command list
    - `Ctrl+Shift+F` (Windows/Linux) or `Cmd+Shift+F` (Mac) - Search commands
@@ -178,7 +178,7 @@ npm install [package_name]
 ### Search Function
 
 ```
-1. Command Palette → "Quick Command: Search Commands"
+1. Command Palette → "Quick Execute Commands: Search Commands"
 2. Enter keywords (searches name, description, tags)
 3. Select command to execute from results
 ```
@@ -198,7 +198,7 @@ Import:
 ### Execution History
 
 ```
-1. Command Palette → "Quick Command: Show Execution History"
+1. Command Palette → "Quick Execute Commands: Show Execution History"
 2. Re-execute from past history (max 100 entries)
 ```
 
@@ -302,7 +302,7 @@ npm test -- --testNamePattern="integration"
 1. **Check ViewContainer**
 
    - Look for **terminal icon** in sidebar activity bar
-   - Click this icon to open "Quick Command" panel
+   - Click this icon to open "Quick Execute Commands" panel
 
 2. **Reload Extension**
 
@@ -312,7 +312,7 @@ npm test -- --testNamePattern="integration"
 
 3. **Create Sample Data**
    ```
-   Command Palette → "Quick Command: Create Sample Commands"
+   Command Palette → "Quick Execute Commands: Create Sample Commands"
    ```
 
 ### Common Issues
@@ -329,7 +329,7 @@ npm test -- --testNamePattern="integration"
 
 3. **Empty Command List**
    - Run sample command creation
-   - Check debug info: `Command Palette → "Quick Command: Debug TreeView"`
+   - Check debug info: `Command Palette → "Quick Execute Commands: Debug TreeView"`
 
 ## 🤝 Contributing
 
@@ -351,4 +351,4 @@ If you have problems or questions, please let us know on the GitHub [Issues](htt
 
 ---
 
-**Quick Command** - Make your VS Code command execution more efficient! 🚀
+**Quick Execute Commands** - Make your VS Code command execution more efficient! 🚀
