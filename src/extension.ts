@@ -24,22 +24,36 @@ export function activate(context: vscode.ExtensionContext) {
   const treeView = vscode.window.createTreeView('quickCommandPanel', {
     treeDataProvider: quickCommandProvider,
     showCollapseAll: true,
+    canSelectMany: false,
   });
 
-  // TreeViewのselectionChangeイベントでコマンド実行を処理
-  const selectionHandler = treeView.onDidChangeSelection(async (e) => {
-    if (e.selection.length > 0) {
-      const selectedItem = e.selection[0];
-      // CommandTreeItemの場合はコマンドを実行
-      if (selectedItem && (selectedItem as any).quickCommand) {
-        const command = (selectedItem as any).quickCommand;
-        await commandManager.executeCommand(command);
-      }
-      // DirectoryTreeItemの場合は展開/折りたたみ
-      else if (selectedItem && (selectedItem as any).directory) {
-        const directory = (selectedItem as any).directory;
+  // TreeViewの展開状態変更イベントを監視
+  const expansionHandler = treeView.onDidExpandElement(async (e) => {
+    console.log('[Extension] TreeView element expanded:', e.element.label);
+    // DirectoryTreeItemの場合は状態を保存
+    if ((e.element as any).directory) {
+      const directory = (e.element as any).directory;
+      if (!directory.isExpanded) {
+        console.log(
+          '[Extension] Saving expanded state for directory:',
+          directory.name
+        );
         await commandManager.toggleDirectoryExpansion(directory.id);
-        quickCommandProvider.refresh();
+      }
+    }
+  });
+
+  const collapseHandler = treeView.onDidCollapseElement(async (e) => {
+    console.log('[Extension] TreeView element collapsed:', e.element.label);
+    // DirectoryTreeItemの場合は状態を保存
+    if ((e.element as any).directory) {
+      const directory = (e.element as any).directory;
+      if (directory.isExpanded) {
+        console.log(
+          '[Extension] Saving collapsed state for directory:',
+          directory.name
+        );
+        await commandManager.toggleDirectoryExpansion(directory.id);
       }
     }
   });
@@ -241,27 +255,30 @@ export function activate(context: vscode.ExtensionContext) {
   // コマンドの登録
   const commands = [
     // パネル表示コマンド
-    vscode.commands.registerCommand('quick-command.showPanel', () => {
+    vscode.commands.registerCommand('quickExecCommands.showPanel', () => {
       webviewProvider.createOrShowWebview();
     }),
 
     // コマンドリスト表示コマンド（階層ナビゲーション対応）
     vscode.commands.registerCommand(
-      'quick-command.showCommandList',
+      'quickExecCommands.showCommandList',
       async () => {
         await showHierarchicalCommandList();
       }
     ),
 
     // コマンド追加コマンド
-    vscode.commands.registerCommand('quick-command.addCommand', async () => {
-      await commandManager.addCommandDialog();
-      quickCommandProvider.refresh();
-    }),
+    vscode.commands.registerCommand(
+      'quickExecCommands.addCommand',
+      async () => {
+        await commandManager.addCommandDialog();
+        quickCommandProvider.refresh();
+      }
+    ),
 
     // ディレクトリにコマンド追加
     vscode.commands.registerCommand(
-      'quick-command.addCommandToDirectory',
+      'quickExecCommands.addCommandToDirectory',
       async (item: any) => {
         let targetDirectory: string | undefined;
         let category: 'global' | 'repository' = 'global';
@@ -280,7 +297,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // ディレクトリ追加コマンド
     vscode.commands.registerCommand(
-      'quick-command.addDirectory',
+      'quickExecCommands.addDirectory',
       async (item: any) => {
         let category: 'global' | 'repository' = 'global';
         let parentPath: string | undefined;
@@ -299,7 +316,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // ディレクトリ削除コマンド
     vscode.commands.registerCommand(
-      'quick-command.deleteDirectory',
+      'quickExecCommands.deleteDirectory',
       async (item: any) => {
         if (!item.directory) return;
 
@@ -329,12 +346,20 @@ export function activate(context: vscode.ExtensionContext) {
 
     // ディレクトリ展開/折りたたみ
     vscode.commands.registerCommand(
-      'quick-command.toggleDirectoryExpansion',
+      'quickExecCommands.toggleDirectoryExpansion',
       async (directoryId: string) => {
         try {
+          console.log(
+            '[Extension] Toggle directory command called with id:',
+            directoryId
+          );
           await commandManager.toggleDirectoryExpansion(directoryId);
+          console.log(
+            '[Extension] Refreshing tree view after directory toggle'
+          );
           quickCommandProvider.refresh();
         } catch (error) {
+          console.error('[Extension] Error toggling directory:', error);
           vscode.window.showErrorMessage(
             `エラー: ${
               error instanceof Error ? error.message : 'Unknown error'
@@ -344,9 +369,33 @@ export function activate(context: vscode.ExtensionContext) {
       }
     ),
 
+    // TreeViewからのコマンド実行
+    vscode.commands.registerCommand(
+      'quickExecCommands.executeFromTreeView',
+      async (command: QuickCommand) => {
+        try {
+          console.log(
+            '[Extension] Execute from tree view:',
+            command.name || command.command
+          );
+          await commandManager.executeCommand(command);
+        } catch (error) {
+          console.error(
+            '[Extension] Error executing command from tree view:',
+            error
+          );
+          vscode.window.showErrorMessage(
+            `コマンド実行エラー: ${
+              error instanceof Error ? error.message : 'Unknown error'
+            }`
+          );
+        }
+      }
+    ),
+
     // コマンド編集コマンド
     vscode.commands.registerCommand(
-      'quick-command.editCommand',
+      'quickExecCommands.editCommand',
       async (commandItem: any) => {
         const command = commandItem.quickCommand || commandItem;
         try {
@@ -429,7 +478,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // コマンド削除コマンド
     vscode.commands.registerCommand(
-      'quick-command.deleteCommand',
+      'quickExecCommands.deleteCommand',
       async (commandItem: any) => {
         // TreeItemの場合はquickCommandプロパティから取得
         const command = commandItem.quickCommand || commandItem;
@@ -440,7 +489,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // お気に入り切り替えコマンド
     vscode.commands.registerCommand(
-      'quick-command.toggleFavorite',
+      'quickExecCommands.toggleFavorite',
       async (commandItem: any) => {
         // TreeItemの場合はquickCommandプロパティから取得
         const command = commandItem.quickCommand || commandItem;
@@ -451,7 +500,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // コマンド検索
     vscode.commands.registerCommand(
-      'quick-command.searchCommands',
+      'quickExecCommands.searchCommands',
       async () => {
         const query = await vscode.window.showInputBox({
           prompt: vscode.l10n.t('prompt.enterSearchKeyword'),
@@ -502,7 +551,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // エクスポート
     vscode.commands.registerCommand(
-      'quick-command.exportCommands',
+      'quickExecCommands.exportCommands',
       async (item: any) => {
         let category: 'global' | 'repository' | undefined;
 
@@ -545,7 +594,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // インポート
     vscode.commands.registerCommand(
-      'quick-command.importCommands',
+      'quickExecCommands.importCommands',
       async (item: any) => {
         let category: 'global' | 'repository' = 'global';
 
@@ -587,98 +636,115 @@ export function activate(context: vscode.ExtensionContext) {
     ),
 
     // 実行履歴表示
-    vscode.commands.registerCommand('quick-command.showHistory', async () => {
-      try {
-        const history = commandManager.getExecutionHistory();
+    vscode.commands.registerCommand(
+      'quickExecCommands.showHistory',
+      async () => {
+        try {
+          const history = commandManager.getExecutionHistory();
 
-        if (history.length === 0) {
-          vscode.window.showInformationMessage(
-            vscode.l10n.t('message.noExecutionHistory')
-          );
-          return;
-        }
-
-        const items = history.slice(0, 20).map((entry) => ({
-          label: entry.commandName,
-          description: entry.success ? '✅ 成功' : '❌ 失敗',
-          detail: `${entry.command} - ${entry.executedAt.toLocaleString()}`,
-          entry,
-        }));
-
-        const selected = await vscode.window.showQuickPick(items, {
-          placeHolder: '実行履歴から選択してください',
-        });
-
-        if (selected) {
-          const allCommands = await commandManager.getAllCommands();
-          const command = allCommands.find(
-            (cmd) => cmd.id === selected.entry.commandId
-          );
-          if (command) {
-            await commandManager.executeCommand(command);
-          } else {
-            vscode.window.showWarningMessage(
-              vscode.l10n.t('message.commandNotFound')
+          if (history.length === 0) {
+            vscode.window.showInformationMessage(
+              vscode.l10n.t('message.noExecutionHistory')
             );
+            return;
           }
+
+          const items = history.slice(0, 20).map((entry) => ({
+            label: entry.commandName,
+            description: entry.success ? '✅ 成功' : '❌ 失敗',
+            detail: `${entry.command} - ${entry.executedAt.toLocaleString()}`,
+            entry,
+          }));
+
+          const selected = await vscode.window.showQuickPick(items, {
+            placeHolder: '実行履歴から選択してください',
+          });
+
+          if (selected) {
+            const allCommands = await commandManager.getAllCommands();
+            const command = allCommands.find(
+              (cmd) => cmd.id === selected.entry.commandId
+            );
+            if (command) {
+              await commandManager.executeCommand(command);
+            } else {
+              vscode.window.showWarningMessage(
+                vscode.l10n.t('message.commandNotFound')
+              );
+            }
+          }
+        } catch (error) {
+          vscode.window.showErrorMessage(
+            `履歴表示エラー: ${
+              error instanceof Error ? error.message : 'Unknown error'
+            }`
+          );
         }
-      } catch (error) {
-        vscode.window.showErrorMessage(
-          `履歴表示エラー: ${
-            error instanceof Error ? error.message : 'Unknown error'
-          }`
-        );
       }
-    }),
+    ),
 
     // デバッグ用コマンド - TreeViewの状態確認
-    vscode.commands.registerCommand('quick-command.debugTreeView', async () => {
-      const globalCommands = commandManager.getGlobalCommands();
-      const workspaceCommands = commandManager.getWorkspaceCommands();
-      const globalDirectories = commandManager.getGlobalDirectories();
-      const workspaceDirectories = commandManager.getWorkspaceDirectories();
+    vscode.commands.registerCommand(
+      'quickExecCommands.debugTreeView',
+      async () => {
+        const globalCommands = commandManager.getGlobalCommands();
+        const workspaceCommands = commandManager.getWorkspaceCommands();
+        const globalDirectories = commandManager.getGlobalDirectories();
+        const workspaceDirectories = commandManager.getWorkspaceDirectories();
 
-      // ストレージキーの確認
-      const globalKeys = context.globalState.keys();
-      const workspaceKeys = context.workspaceState.keys();
+        // ストレージキーの確認
+        const globalKeys = context.globalState.keys();
+        const workspaceKeys = context.workspaceState.keys();
 
-      const debugInfo = {
-        globalCommands: globalCommands.map((cmd) => ({
-          id: cmd.id,
-          name: cmd.name,
-          command: cmd.command,
-        })),
-        workspaceCommands: workspaceCommands.map((cmd) => ({
-          id: cmd.id,
-          name: cmd.name,
-          command: cmd.command,
-        })),
-        globalDirectories: globalDirectories.map((dir) => ({
-          id: dir.id,
-          name: dir.name,
-          path: dir.path,
-        })),
-        workspaceDirectories: workspaceDirectories.map((dir) => ({
-          id: dir.id,
-          name: dir.name,
-          path: dir.path,
-        })),
-        storageKeys: {
-          global: globalKeys,
-          workspace: workspaceKeys,
-        },
-      };
+        const debugInfo = {
+          globalCommands: globalCommands.map((cmd) => ({
+            id: cmd.id,
+            name: cmd.name,
+            command: cmd.command,
+            directory: cmd.directory,
+          })),
+          workspaceCommands: workspaceCommands.map((cmd) => ({
+            id: cmd.id,
+            name: cmd.name,
+            command: cmd.command,
+            directory: cmd.directory,
+          })),
+          globalDirectories: globalDirectories.map((dir) => ({
+            id: dir.id,
+            name: dir.name,
+            path: dir.path,
+            isExpanded: dir.isExpanded,
+          })),
+          workspaceDirectories: workspaceDirectories.map((dir) => ({
+            id: dir.id,
+            name: dir.name,
+            path: dir.path,
+            isExpanded: dir.isExpanded,
+          })),
+          storageKeys: {
+            global: globalKeys,
+            workspace: workspaceKeys,
+          },
+        };
 
-      console.log('=== Quick Command Debug Info ===');
-      console.log(JSON.stringify(debugInfo, null, 2));
+        console.log('=== Quick Command Debug Info ===');
+        console.log(JSON.stringify(debugInfo, null, 2));
 
-      const message = `
+        const message = `
 Quick Command Debug Info:
 - Global Commands: ${globalCommands.length}個
 - Workspace Commands: ${workspaceCommands.length}個
 - Global Directories: ${globalDirectories.length}個  
 - Workspace Directories: ${workspaceDirectories.length}個
 - Total Commands: ${globalCommands.length + workspaceCommands.length}個
+
+Directories Expansion State:
+Global: ${globalDirectories
+          .map((d) => `${d.name}(${d.isExpanded ? 'expanded' : 'collapsed'})`)
+          .join(', ')}
+Workspace: ${workspaceDirectories
+          .map((d) => `${d.name}(${d.isExpanded ? 'expanded' : 'collapsed'})`)
+          .join(', ')}
 
 Storage Keys:
 - Global: ${globalKeys.join(', ')}
@@ -687,15 +753,16 @@ Storage Keys:
 詳細はコンソール（開発者ツール）を確認してください。
       `;
 
-      vscode.window.showInformationMessage(message, { modal: true });
+        vscode.window.showInformationMessage(message, { modal: true });
 
-      // TreeViewを強制的にリフレッシュ
-      quickCommandProvider.refresh();
-    }),
+        // TreeViewを強制的にリフレッシュ
+        quickCommandProvider.refresh();
+      }
+    ),
 
     // サンプルコマンド作成
     vscode.commands.registerCommand(
-      'quick-command.createSampleCommands',
+      'quickExecCommands.createSampleCommands',
       async () => {
         try {
           // サンプルディレクトリを作成
@@ -818,7 +885,7 @@ Storage Keys:
 
     // デモ用コマンド作成（GIF制作用）
     vscode.commands.registerCommand(
-      'quick-command.createDemoCommands',
+      'quickExecCommands.createDemoCommands',
       async () => {
         await createDemoCommands(commandManager);
         quickCommandProvider.refresh();
@@ -827,8 +894,9 @@ Storage Keys:
 
     // ツリービューの更新
     treeView,
-    // TreeViewのselection変更イベントハンドラー
-    selectionHandler,
+    // TreeViewの展開・折りたたみイベントハンドラー
+    expansionHandler,
+    collapseHandler,
   ];
 
   // コンテキストに追加

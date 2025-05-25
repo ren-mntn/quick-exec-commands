@@ -306,18 +306,18 @@ Import:
 
 ## 📊 Available Commands
 
-| Command                              | Description            | Shortcut       |
-| ------------------------------------ | ---------------------- | -------------- |
-| `quick-command.showPanel`            | Show Panel             | -              |
-| `quick-command.showCommandList`      | Show Command List      | `Ctrl+Shift+X` |
-| `quick-command.searchCommands`       | Search Commands        | `Ctrl+Shift+F` |
-| `quick-command.addCommand`           | Add Command            | -              |
-| `quick-command.editCommand`          | Edit Command           | -              |
-| `quick-command.addDirectory`         | Add Directory          | -              |
-| `quick-command.showHistory`          | Show Execution History | -              |
-| `quick-command.exportCommands`       | Export Commands        | -              |
-| `quick-command.importCommands`       | Import Commands        | -              |
-| `quick-command.createSampleCommands` | Create Sample Commands | -              |
+| Command                                    | Description            | Shortcut       |
+| ------------------------------------------ | ---------------------- | -------------- |
+| `quick-exec-commands.showPanel`            | Show Panel             | -              |
+| `quick-exec-commands.showCommandList`      | Show Command List      | `Ctrl+Shift+X` |
+| `quick-exec-commands.searchCommands`       | Search Commands        | `Ctrl+Shift+F` |
+| `quick-exec-commands.addCommand`           | Add Command            | -              |
+| `quick-exec-commands.editCommand`          | Edit Command           | -              |
+| `quick-exec-commands.addDirectory`         | Add Directory          | -              |
+| `quick-exec-commands.showHistory`          | Show Execution History | -              |
+| `quick-exec-commands.exportCommands`       | Export Commands        | -              |
+| `quick-exec-commands.importCommands`       | Import Commands        | -              |
+| `quick-exec-commands.createSampleCommands` | Create Sample Commands | -              |
 
 ## ⚙️ Data Storage
 

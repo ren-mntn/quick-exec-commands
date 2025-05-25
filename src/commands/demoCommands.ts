@@ -6,7 +6,9 @@ export async function createDemoCommands(
 ): Promise<void> {
   try {
     // 既存のサンプルコマンドを作成
-    await vscode.commands.executeCommand('quick-command.createSampleCommands');
+    await vscode.commands.executeCommand(
+      'quickExecCommands.createSampleCommands'
+    );
 
     // デモ用追加ディレクトリを作成
     await commandManager.addDirectory({

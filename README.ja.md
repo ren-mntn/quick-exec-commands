@@ -315,18 +315,18 @@ npm install [パッケージ名]
 
 ## 📊 コマンド一覧
 
-| コマンド                             | 説明                   | ショートカット |
-| ------------------------------------ | ---------------------- | -------------- |
-| `quick-command.showPanel`            | パネルを表示           | -              |
-| `quick-command.showCommandList`      | コマンドリストを表示   | `Ctrl+Shift+K` |
-| `quick-command.searchCommands`       | コマンドを検索         | `Ctrl+Shift+F` |
-| `quick-command.addCommand`           | コマンドを追加         | -              |
-| `quick-command.editCommand`          | コマンドを編集         | -              |
-| `quick-command.addDirectory`         | ディレクトリを追加     | -              |
-| `quick-command.showHistory`          | 実行履歴を表示         | -              |
-| `quick-command.exportCommands`       | コマンドをエクスポート | -              |
-| `quick-command.importCommands`       | コマンドをインポート   | -              |
-| `quick-command.createSampleCommands` | サンプルコマンドを作成 | -              |
+| コマンド                                   | 説明                   | ショートカット |
+| ------------------------------------------ | ---------------------- | -------------- |
+| `quick-exec-commands.showPanel`            | パネルを表示           | -              |
+| `quick-exec-commands.showCommandList`      | コマンドリストを表示   | `Ctrl+Shift+K` |
+| `quick-exec-commands.searchCommands`       | コマンドを検索         | `Ctrl+Shift+F` |
+| `quick-exec-commands.addCommand`           | コマンドを追加         | -              |
+| `quick-exec-commands.editCommand`          | コマンドを編集         | -              |
+| `quick-exec-commands.addDirectory`         | ディレクトリを追加     | -              |
+| `quick-exec-commands.showHistory`          | 実行履歴を表示         | -              |
+| `quick-exec-commands.exportCommands`       | コマンドをエクスポート | -              |
+| `quick-exec-commands.importCommands`       | コマンドをインポート   | -              |
+| `quick-exec-commands.createSampleCommands` | サンプルコマンドを作成 | -              |
 
 ## ⚙️ データ保存
 

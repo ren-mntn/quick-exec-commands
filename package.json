@@ -2,7 +2,7 @@
   "name": "quick-exec-commands",
   "displayName": "Quick Execute Commands",
   "description": "Efficiently manage and execute terminal & VS Code commands with a unified interface",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "icon": "asset/icon.webp",
   "engines": {
     "vscode": "^1.75.0"
@@ -34,89 +34,89 @@
   "contributes": {
     "commands": [
       {
-        "command": "quick-command.showPanel",
+        "command": "quickExecCommands.showPanel",
         "title": "%command.showPanel%"
       },
       {
-        "command": "quick-command.showCommandList",
+        "command": "quickExecCommands.showCommandList",
         "title": "%command.showCommandList%"
       },
       {
-        "command": "quick-command.addCommand",
+        "command": "quickExecCommands.addCommand",
         "title": "%command.addCommand%",
         "icon": "$(plus)"
       },
       {
-        "command": "quick-command.deleteCommand",
+        "command": "quickExecCommands.deleteCommand",
         "title": "%command.deleteCommand%"
       },
       {
-        "command": "quick-command.toggleFavorite",
+        "command": "quickExecCommands.toggleFavorite",
         "title": "%command.toggleFavorite%",
         "icon": "$(star)"
       },
       {
-        "command": "quick-command.addDirectory",
+        "command": "quickExecCommands.addDirectory",
         "title": "%command.addDirectory%",
         "icon": "$(new-folder)"
       },
       {
-        "command": "quick-command.addCommandToDirectory",
+        "command": "quickExecCommands.addCommandToDirectory",
         "title": "%command.addCommandToDirectory%",
         "icon": "$(plus)"
       },
       {
-        "command": "quick-command.deleteDirectory",
+        "command": "quickExecCommands.deleteDirectory",
         "title": "%command.deleteDirectory%"
       },
       {
-        "command": "quick-command.toggleDirectoryExpansion",
+        "command": "quickExecCommands.toggleDirectoryExpansion",
         "title": "%command.toggleDirectoryExpansion%"
       },
       {
-        "command": "quick-command.editCommand",
+        "command": "quickExecCommands.editCommand",
         "title": "%command.editCommand%"
       },
       {
-        "command": "quick-command.exportCommands",
+        "command": "quickExecCommands.exportCommands",
         "title": "%command.exportCommands%"
       },
       {
-        "command": "quick-command.importCommands",
+        "command": "quickExecCommands.importCommands",
         "title": "%command.importCommands%"
       },
       {
-        "command": "quick-command.searchCommands",
+        "command": "quickExecCommands.searchCommands",
         "title": "%command.searchCommands%",
         "icon": "$(search)"
       },
       {
-        "command": "quick-command.showHistory",
+        "command": "quickExecCommands.showHistory",
         "title": "%command.showHistory%"
       },
       {
-        "command": "quick-command.debugTreeView",
+        "command": "quickExecCommands.debugTreeView",
         "title": "%command.debugTreeView%"
       },
       {
-        "command": "quick-command.createSampleCommands",
+        "command": "quickExecCommands.createSampleCommands",
         "title": "%command.createSampleCommands%"
       },
       {
-        "command": "quick-command.createDemoCommands",
+        "command": "quickExecCommands.createDemoCommands",
         "title": "%command.createDemoCommands%"
       }
     ],
     "keybindings": [
       {
-        "command": "quick-command.showCommandList",
-        "key": "ctrl+shift+x",
-        "mac": "cmd+shift+x"
+        "command": "quickExecCommands.showCommandList",
+        "key": "ctrl+alt+q",
+        "mac": "cmd+alt+q"
       },
       {
-        "command": "quick-command.searchCommands",
-        "key": "ctrl+shift+f",
-        "mac": "cmd+shift+f"
+        "command": "quickExecCommands.searchCommands",
+        "key": "ctrl+alt+s",
+        "mac": "cmd+alt+s"
       }
     ],
     "viewsContainers": {
@@ -147,90 +147,74 @@
     "menus": {
       "commandPalette": [
         {
-          "command": "quick-command.deleteCommand",
+          "command": "quickExecCommands.addCommandToDirectory",
           "when": "false"
         },
         {
-          "command": "quick-command.toggleFavorite",
-          "when": "false"
-        },
-        {
-          "command": "quick-command.addCommandToDirectory",
-          "when": "false"
-        },
-        {
-          "command": "quick-command.deleteDirectory",
-          "when": "false"
-        },
-        {
-          "command": "quick-command.toggleDirectoryExpansion",
-          "when": "false"
-        },
-        {
-          "command": "quick-command.editCommand",
+          "command": "quickExecCommands.toggleDirectoryExpansion",
           "when": "false"
         }
       ],
       "view/title": [
         {
-          "command": "quick-command.addCommand",
+          "command": "quickExecCommands.addCommand",
           "when": "view == quickCommandPanel",
           "group": "navigation@1"
         },
         {
-          "command": "quick-command.addDirectory",
+          "command": "quickExecCommands.addDirectory",
           "when": "view == quickCommandPanel",
           "group": "navigation@2"
         },
         {
-          "command": "quick-command.searchCommands",
+          "command": "quickExecCommands.searchCommands",
           "when": "view == quickCommandPanel",
           "group": "navigation@3"
         }
       ],
       "view/item/context": [
         {
-          "command": "quick-command.toggleFavorite",
+          "command": "quickExecCommands.toggleFavorite",
           "when": "view == quickCommandPanel && viewItem == quickCommand",
           "group": "inline@1"
         },
         {
-          "command": "quick-command.addCommandToDirectory",
+          "command": "quickExecCommands.addCommandToDirectory",
           "when": "view == quickCommandPanel && viewItem =~ /.*Category$/",
           "group": "inline@1"
         },
         {
-          "command": "quick-command.addDirectory",
+          "command": "quickExecCommands.addDirectory",
           "when": "view == quickCommandPanel && viewItem =~ /.*Category$/",
           "group": "inline@2"
         },
         {
-          "command": "quick-command.addCommandToDirectory",
+          "command": "quickExecCommands.addCommandToDirectory",
           "when": "view == quickCommandPanel && viewItem == commandDirectory",
           "group": "inline@1"
         },
         {
-          "command": "quick-command.editCommand",
+          "command": "quickExecCommands.editCommand",
           "when": "view == quickCommandPanel && viewItem == quickCommand",
           "group": "command@1"
         },
         {
-          "command": "quick-command.deleteCommand",
+          "command": "quickExecCommands.deleteCommand",
           "when": "view == quickCommandPanel && viewItem == quickCommand",
           "group": "command@2"
         },
         {
-          "command": "quick-command.deleteDirectory",
+          "command": "quickExecCommands.deleteDirectory",
           "when": "view == quickCommandPanel && viewItem == commandDirectory",
           "group": "command@1"
         },
         {
-          "command": "quick-command.exportCommands",
+          "command": "quickExecCommands.exportCommands",
           "when": "view == quickCommandPanel && viewItem =~ /.*Category$/",
           "group": "export@1"
         },
         {
-          "command": "quick-command.importCommands",
+          "command": "quickExecCommands.importCommands",
           "when": "view == quickCommandPanel && viewItem =~ /.*Category$/",
           "group": "export@2"
         }

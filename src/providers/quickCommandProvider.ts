@@ -15,6 +15,7 @@ export class QuickCommandProvider implements vscode.TreeDataProvider<TreeItem> {
   constructor(private commandManager: CommandManager) {}
 
   refresh(): void {
+    console.log('[QuickCommandProvider] Refreshing tree view');
     this._onDidChangeTreeData.fire();
   }
 
@@ -23,40 +24,39 @@ export class QuickCommandProvider implements vscode.TreeDataProvider<TreeItem> {
   }
 
   async getChildren(element?: TreeItem): Promise<TreeItem[]> {
-    // デバッグモードでのみログを出力
-    if (process.env.NODE_ENV === 'development') {
-      console.log(
-        'QuickCommandProvider.getChildren called',
-        element ? element.label : 'root'
-      );
-    }
+    console.log(
+      '[QuickCommandProvider] getChildren called for:',
+      element ? element.label : 'root'
+    );
 
     if (!element) {
       // ルートレベル：お気に入り、グローバル、ワークスペースのカテゴリ
       const items: TreeItem[] = [];
 
       const favoriteCommands = await this.commandManager.getFavoriteCommands();
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Favorite commands count:', favoriteCommands.length);
-      }
+      console.log(
+        '[QuickCommandProvider] Favorite commands count:',
+        favoriteCommands.length
+      );
 
       const globalCommands = this.commandManager.getGlobalCommands();
       const globalDirectories = this.commandManager.getGlobalDirectories();
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Global commands count:', globalCommands.length);
-        console.log('Global directories count:', globalDirectories.length);
-      }
+      console.log(
+        '[QuickCommandProvider] Global commands:',
+        globalCommands.length,
+        'directories:',
+        globalDirectories.length
+      );
 
       const workspaceCommands = this.commandManager.getWorkspaceCommands();
       const workspaceDirectories =
         this.commandManager.getWorkspaceDirectories();
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Workspace commands count:', workspaceCommands.length);
-        console.log(
-          'Workspace directories count:',
-          workspaceDirectories.length
-        );
-      }
+      console.log(
+        '[QuickCommandProvider] Workspace commands:',
+        workspaceCommands.length,
+        'directories:',
+        workspaceDirectories.length
+      );
 
       // 常にカテゴリを表示（空でも）
       if (favoriteCommands.length > 0) {
@@ -85,24 +85,35 @@ export class QuickCommandProvider implements vscode.TreeDataProvider<TreeItem> {
         )
       );
 
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Returning items count:', items.length);
-      }
+      console.log(
+        '[QuickCommandProvider] Returning',
+        items.length,
+        'categories'
+      );
       return items;
     } else if (element instanceof CategoryTreeItem) {
       // カテゴリ配下のディレクトリとコマンド一覧
+      console.log(
+        '[QuickCommandProvider] Processing category:',
+        element.category
+      );
       const items: TreeItem[] = [];
 
       // ルートレベルのディレクトリを追加
       const rootDirectories = element.directories.filter(
         (dir) => !dir.path.includes('/')
       );
+      console.log(
+        '[QuickCommandProvider] Root directories in category:',
+        rootDirectories.length
+      );
       for (const directory of rootDirectories) {
         if (element.category !== 'favorite') {
           items.push(
             new DirectoryTreeItem(
               directory,
-              element.category as 'global' | 'repository'
+              element.category as 'global' | 'repository',
+              this.commandManager
             )
           );
         }
@@ -110,22 +121,49 @@ export class QuickCommandProvider implements vscode.TreeDataProvider<TreeItem> {
 
       // ルートレベルのコマンドを追加
       const rootCommands = element.commands.filter((cmd) => !cmd.directory);
+      console.log(
+        '[QuickCommandProvider] Root commands in category:',
+        rootCommands.length
+      );
       for (const command of rootCommands) {
         items.push(new CommandTreeItem(command));
       }
 
+      console.log('[QuickCommandProvider] Category items total:', items.length);
       return items;
     } else if (element instanceof DirectoryTreeItem) {
       // ディレクトリ配下のサブディレクトリとコマンド一覧
-      if (!element.directory.isExpanded) {
-        return [];
-      }
+      console.log(
+        '[QuickCommandProvider] Processing directory:',
+        element.directory.name,
+        'expanded:',
+        element.directory.isExpanded,
+        'path:',
+        element.directory.path
+      );
 
-      const items: TreeItem[] = [];
+      // 最新のディレクトリ状態を取得して展開状態をチェック
       const allDirectories =
         element.category === 'global'
           ? this.commandManager.getGlobalDirectories()
           : this.commandManager.getWorkspaceDirectories();
+
+      const currentDirectory = allDirectories.find(
+        (dir) => dir.id === element.directory.id
+      );
+      console.log(
+        '[QuickCommandProvider] Current directory from storage:',
+        currentDirectory?.isExpanded
+      );
+
+      if (!currentDirectory || !currentDirectory.isExpanded) {
+        console.log(
+          '[QuickCommandProvider] Directory not expanded, returning empty array'
+        );
+        return [];
+      }
+
+      const items: TreeItem[] = [];
       const allCommands =
         element.category === 'global'
           ? this.commandManager.getGlobalCommands()
@@ -138,18 +176,36 @@ export class QuickCommandProvider implements vscode.TreeDataProvider<TreeItem> {
           dir.path.split('/').length ===
             element.directory.path.split('/').length + 1
       );
+      console.log(
+        '[QuickCommandProvider] Sub directories:',
+        subDirectories.length
+      );
       for (const directory of subDirectories) {
-        items.push(new DirectoryTreeItem(directory, element.category));
+        items.push(
+          new DirectoryTreeItem(
+            directory,
+            element.category,
+            this.commandManager
+          )
+        );
       }
 
       // ディレクトリ内のコマンドを追加
       const commandsInDirectory = allCommands.filter(
         (cmd) => cmd.directory === element.directory.path
       );
+      console.log(
+        '[QuickCommandProvider] Commands in directory:',
+        commandsInDirectory.length
+      );
       for (const command of commandsInDirectory) {
         items.push(new CommandTreeItem(command));
       }
 
+      console.log(
+        '[QuickCommandProvider] Directory items total:',
+        items.length
+      );
       return items;
     }
 
@@ -170,8 +226,12 @@ export class CommandTreeItem extends vscode.TreeItem {
     this.description = this.createDescription();
     this.contextValue = 'quickCommand';
 
-    // ホバー時の表示を完全に消すためcommandは設定しない
-    // クリック処理はTreeViewのselectionイベントで処理
+    // コマンド実行のためのcommandを設定
+    this.command = {
+      command: 'quickExecCommands.executeFromTreeView',
+      title: 'Execute Command',
+      arguments: [this.quickCommand],
+    };
   }
 
   private createTooltip(): string {
@@ -197,11 +257,19 @@ export class CommandTreeItem extends vscode.TreeItem {
 export class DirectoryTreeItem extends vscode.TreeItem {
   constructor(
     public readonly directory: CommandDirectory,
-    public readonly category: 'global' | 'repository'
+    public readonly category: 'global' | 'repository',
+    private commandManager?: CommandManager
   ) {
+    // 最新の展開状態を取得
+    const currentState = DirectoryTreeItem.getCurrentDirectoryState(
+      directory,
+      category,
+      commandManager
+    );
+
     super(
       directory.name,
-      directory.isExpanded
+      currentState.isExpanded
         ? vscode.TreeItemCollapsibleState.Expanded
         : vscode.TreeItemCollapsibleState.Collapsed
     );
@@ -213,7 +281,36 @@ export class DirectoryTreeItem extends vscode.TreeItem {
     // アイコンの設定
     this.iconPath = this.getDirectoryIcon();
 
-    // クリック処理はTreeViewのselectionイベントで処理
+    console.log(
+      '[DirectoryTreeItem] Created:',
+      this.directory.name,
+      'expanded:',
+      currentState.isExpanded,
+      'collapsibleState:',
+      this.collapsibleState
+    );
+
+    // 標準的なTreeView展開・折りたたみ動作を使用
+  }
+
+  private static getCurrentDirectoryState(
+    directory: CommandDirectory,
+    category: 'global' | 'repository',
+    commandManager?: CommandManager
+  ): CommandDirectory {
+    if (!commandManager) {
+      return directory;
+    }
+
+    const allDirectories =
+      category === 'global'
+        ? commandManager.getGlobalDirectories()
+        : commandManager.getWorkspaceDirectories();
+
+    const currentDirectory = allDirectories.find(
+      (dir) => dir.id === directory.id
+    );
+    return currentDirectory || directory;
   }
 
   private getDirectoryIcon(): vscode.ThemeIcon {

@@ -320,6 +320,7 @@ export class CommandManager {
 
   // ディレクトリの展開/折りたたみ切り替え
   async toggleDirectoryExpansion(id: string): Promise<void> {
+    console.log('[CommandManager] toggleDirectoryExpansion called for id:', id);
     const globalDirectories = this.getGlobalDirectories();
     const workspaceDirectories = this.getWorkspaceDirectories();
 
@@ -328,8 +329,16 @@ export class CommandManager {
     // グローバルディレクトリから検索
     const globalIndex = globalDirectories.findIndex((dir) => dir.id === id);
     if (globalIndex !== -1) {
-      globalDirectories[globalIndex].isExpanded =
-        !globalDirectories[globalIndex].isExpanded;
+      const oldState = globalDirectories[globalIndex].isExpanded;
+      globalDirectories[globalIndex].isExpanded = !oldState;
+      console.log(
+        '[CommandManager] Global directory toggle:',
+        globalDirectories[globalIndex].name,
+        'from',
+        oldState,
+        'to',
+        globalDirectories[globalIndex].isExpanded
+      );
       await this.context.globalState.update(
         this.globalDirectoriesKey,
         globalDirectories
@@ -342,8 +351,16 @@ export class CommandManager {
       (dir) => dir.id === id
     );
     if (workspaceIndex !== -1) {
-      workspaceDirectories[workspaceIndex].isExpanded =
-        !workspaceDirectories[workspaceIndex].isExpanded;
+      const oldState = workspaceDirectories[workspaceIndex].isExpanded;
+      workspaceDirectories[workspaceIndex].isExpanded = !oldState;
+      console.log(
+        '[CommandManager] Workspace directory toggle:',
+        workspaceDirectories[workspaceIndex].name,
+        'from',
+        oldState,
+        'to',
+        workspaceDirectories[workspaceIndex].isExpanded
+      );
       await this.context.workspaceState.update(
         this.workspaceDirectoriesKey,
         workspaceDirectories
@@ -352,8 +369,11 @@ export class CommandManager {
     }
 
     if (!updated) {
+      console.error('[CommandManager] Directory not found:', id);
       throw new Error(`ディレクトリが見つかりません: ${id}`);
     }
+
+    console.log('[CommandManager] Directory expansion toggle completed');
   }
 
   // === 実行履歴 ===
