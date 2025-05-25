@@ -8,7 +8,7 @@ module.exports = {
   },
   collectCoverageFrom: ['src/**/*.ts', '!src/**/*.d.ts'],
   setupFilesAfterEnv: [],
-  moduleNameMapping: {
+  moduleNameMapper: {
     '^vscode$': '<rootDir>/src/__mocks__/vscode.ts',
   },
 };

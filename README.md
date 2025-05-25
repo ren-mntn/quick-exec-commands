@@ -1,122 +1,354 @@
 # Quick Command
 
-VS Code でコマンドを効率的に管理・実行するための拡張機能です。
+![Quick Command](./asset/top.png)
 
-## 機能
+> [📖 日本語版はこちら / Japanese Version](./README.ja.md)
 
-### 🚀 主な機能
+A VS Code extension for efficiently managing and executing both **terminal commands** and **VS Code internal commands** with a unified interface.
 
-- **コマンド管理**: よく使うコマンドを登録・管理
-- **動的入力**: コマンド実行時に必要な値を入力可能
-- **カテゴリ分け**: グローバル・ワークスペース別にコマンドを分類
-- **お気に入り**: よく使うコマンドをお気に入りに登録
-- **高級感のある UI**: グラデーションを使った美しいインターフェース
+## 🌟 Key Features
 
-### 📋 専用パネル機能
+- **🖥️ Terminal Commands**: npm, git, docker and other shell commands
+- **⚙️ VS Code Commands**: File operations, settings, extensions and other internal VS Code actions
+- **🎯 Intelligent Registration**: Optimized UI based on command type
+- **📁 Hierarchical Management**: Organize commands with directory structure
+- **🔍 Advanced Search**: Flexible search by name, description, and tags
+- **📊 Execution History**: Track command usage frequency and history
+- **🌍 Multi-language Support**: Auto-detection of user locale (English/Japanese)
 
-- コマンドの一覧表示
-- コマンドの追加・編集・削除
-- お気に入りの切り替え
-- カテゴリ別表示（お気に入り、グローバル、ワークスペース）
+## 🚀 Latest Features
 
-### ⌨️ ショートカット機能
+### VS Code Command Support
 
-- `Cmd+Shift+K` (Mac) / `Ctrl+Shift+K` (Windows/Linux): コマンドリストを表示
-- VS Code 上部のクイックピックでコマンドを選択・実行
+- **Available Commands**: Select from a comprehensive list of VS Code commands
+- **Popular Commands**: Priority display of frequently used commands (⭐ marked)
+- **Real-time Search**: Quick access with instant filtering
+- **Localized Display Names**: Automatic suggestions in your language
 
-## 使い方
+### Enhanced Command Registration UX
 
-### 1. コマンドの追加
+- **2-Step Process**: Intuitive workflow for command creation
+- **Pre-selection of Command Type**: Choose between terminal and VS Code commands
+- **Searchable VS Code Commands**: Browse and filter available commands
+- **Shell History Integration**: Register commands from your terminal history
 
-1. エクスプローラーパネルの「Quick Command」セクションを開く
-2. 「コマンドを追加」ボタンをクリック
-3. 以下の情報を入力：
-   - **コマンド名**: 表示名（例: "Git Commit"）
-   - **コマンド**: 実行するコマンド（例: `git commit -m [メッセージ]`）
-   - **説明**: コマンドの説明（オプション）
-   - **保存範囲**: グローバル or ワークスペース
-   - **お気に入り**: チェックでお気に入りに追加
+### Command Editing
 
-### 2. 動的入力の使用
+- **Complete Editing**: Modify all command properties
+- **Multiple Access Points**: Edit from both TreeView and Webview
+- **Type Preservation**: Command type cannot be changed during editing (by design)
 
-コマンド内で `[入力内容]` の形式を使用すると、実行時に入力ダイアログが表示されます。
+## 📋 Getting Started
 
-**例:**
+### Basic Usage
 
-- `git commit -m [コミットメッセージ]`
-- `docker run -p [ポート番号]:80 nginx`
-- `npm install [パッケージ名]`
+1. **Command Palette**: Run `Quick Command: Show Panel`
+2. **Sidebar**: Use the Quick Command panel
+3. **Keyboard Shortcuts**:
+   - `Ctrl+Shift+X` (Windows/Linux) or `Cmd+Shift+X` (Mac) - Show command list
+   - `Ctrl+Shift+F` (Windows/Linux) or `Cmd+Shift+F` (Mac) - Search commands
 
-### 3. コマンドの実行
+### Adding Commands
 
-#### 専用パネルから
+#### 🖥️ Adding Terminal Commands
 
-- エクスプローラーの「Quick Command」セクションでコマンドをクリック
-
-#### ショートカットから
-
-- `Cmd+Shift+K` (Mac) / `Ctrl+Shift+K` (Windows/Linux) を押す
-- 表示されたリストからコマンドを選択
-
-### 4. コマンドの管理
-
-- **お気に入り切り替え**: コマンドを右クリックして「お気に入り切り替え」
-- **削除**: コマンドを右クリックして「削除」
-- **編集**: 現在は削除して再作成
-
-## 開発
-
-### 必要な環境
-
-- Node.js 16.x 以上
-- VS Code 1.74.0 以上
-
-### セットアップ
-
-```bash
-# 依存関係のインストール
-npm install
-
-# 開発モードでビルド（ウォッチモード）
-npm run dev
-
-# プロダクションビルド
-npm run build
-
-# テスト実行
-npm test
-
-# リンター実行
-npm run lint
-
-# フォーマッター実行
-npm run format
+```
+1. Click "Add Command"
+2. Select "Terminal Command"
+3. Enter command name (e.g., "Git Status")
+4. Enter command (e.g., "git status")
+5. Set description, scope, and favorites
 ```
 
-### 技術スタック
+**Option: Use Shell History**
 
-- **言語**: TypeScript
-- **バンドラ**: Webpack
-- **UI フレームワーク**: React
-- **スタイル**: CSS（VS Code テーマ変数使用）
-- **リンター**: ESLint
-- **フォーマッター**: Prettier
-- **テスト**: Jest
+- Click "📋 Select from History" button
+- Choose from your recent terminal commands
+- Frequently used commands are marked with ⭐
 
-## ライセンス
+#### ⚙️ Adding VS Code Commands
 
-MIT License
+```
+1. Click "Add Command"
+2. Select "VS Code Command"
+3. Search and select from command list
+   - Popular commands (⭐) shown first
+   - Use search box to filter
+4. Enter display name and description (auto-suggested)
+5. Set scope and favorites
+```
 
-## 貢献
+### Popular VS Code Commands
 
-プルリクエストやイシューの報告を歓迎します。
+| Command                                    | Display Name    | Purpose                 |
+| ------------------------------------------ | --------------- | ----------------------- |
+| `workbench.action.files.save`              | Save File       | Save current file       |
+| `workbench.action.files.saveAll`           | Save All Files  | Save all open files     |
+| `workbench.action.quickOpen`               | Quick Open      | Open file search dialog |
+| `workbench.action.showCommands`            | Command Palette | Show command palette    |
+| `workbench.action.toggleSidebarVisibility` | Toggle Sidebar  | Show/hide sidebar       |
+| `editor.action.formatDocument`             | Format Document | Format current document |
+| `workbench.action.reloadWindow`            | Reload Window   | Reload VS Code window   |
 
-## 更新履歴
+### Hierarchical Navigation
 
-### v0.0.1
+When using keyboard shortcuts, you'll get hierarchical navigation:
 
-- 初回リリース
-- 基本的なコマンド管理機能
-- 動的入力機能
-- お気に入り機能
-- グラデーション UI
+```
+1. Category Selection
+   ⭐ Favorites
+   🌐 Global
+   📁 Workspace
+
+2. Directory & Command Selection
+   📂 .. (Back)
+   📁 aws/
+   📁 docker/
+   🖥️ Git Commit
+   ⚙️ Save File [VS Code]
+
+3. Subdirectory Navigation
+   📂 .. (Back)
+   📁 ec2/
+   📁 s3/
+   🖥️ AWS CLI Setup
+```
+
+### Directory Management
+
+```
+📁 workspace
+  ├── 📁 development
+  │   ├── 🖥️ npm start
+  │   ├── 🖥️ npm test
+  │   └── ⚙️ Open Terminal [VS Code]
+  ├── 📁 git
+  │   ├── 🖥️ git status
+  │   ├── 🖥️ git commit -m [message]
+  │   └── ⚙️ Show Source Control [VS Code]
+  └── 📁 docker
+      ├── 🖥️ docker build -t myapp .
+      └── 🖥️ docker run --rm myapp
+
+📁 global
+  ├── 📁 vscode-commands
+  │   ├── ⚙️ Open Settings [VS Code]
+  │   ├── ⚙️ Show Extensions [VS Code]
+  │   └── ⚙️ Command Palette [VS Code]
+  └── 📁 system
+      ├── 🖥️ node --version
+      └── 🖥️ npm --version
+```
+
+### Dynamic Input Fields
+
+Include `[variable_name]` in commands to show input forms during execution:
+
+```bash
+# Terminal command examples
+git commit -m "[commit message]"
+docker run --name [container_name] [image_name]
+npm install [package_name]
+
+# VS Code commands handle arguments automatically
+```
+
+## 🎮 Interface
+
+### TreeView Operations
+
+- **➕ Icon**: Add new command
+- **📁 Icon**: Add new directory
+- **🔍 Icon**: Search commands
+- **⭐ Icon**: Toggle favorites
+- **✏️ Icon**: Edit command
+- **🗑️ Icon**: Delete command
+- **Right-click**: Context menu for detailed operations
+
+### Webview Operations
+
+- **Command Cards**: Click to execute
+- **⭐ Button**: Toggle favorites
+- **▶️ Button**: Execute command
+- **✏️ Button**: Edit command
+- **🗑️ Button**: Delete command
+
+## 🔧 Advanced Features
+
+### Search Function
+
+```
+1. Command Palette → "Quick Command: Search Commands"
+2. Enter keywords (searches name, description, tags)
+3. Select command to execute from results
+```
+
+### Export/Import
+
+```
+Export:
+1. Right-click category → "Export Commands"
+2. Choose save location
+
+Import:
+1. Right-click category → "Import Commands"
+2. Select JSON file
+```
+
+### Execution History
+
+```
+1. Command Palette → "Quick Command: Show Execution History"
+2. Re-execute from past history (max 100 entries)
+```
+
+## 📊 Available Commands
+
+| Command                              | Description            | Shortcut       |
+| ------------------------------------ | ---------------------- | -------------- |
+| `quick-command.showPanel`            | Show Panel             | -              |
+| `quick-command.showCommandList`      | Show Command List      | `Ctrl+Shift+X` |
+| `quick-command.searchCommands`       | Search Commands        | `Ctrl+Shift+F` |
+| `quick-command.addCommand`           | Add Command            | -              |
+| `quick-command.editCommand`          | Edit Command           | -              |
+| `quick-command.addDirectory`         | Add Directory          | -              |
+| `quick-command.showHistory`          | Show Execution History | -              |
+| `quick-command.exportCommands`       | Export Commands        | -              |
+| `quick-command.importCommands`       | Import Commands        | -              |
+| `quick-command.createSampleCommands` | Create Sample Commands | -              |
+
+## ⚙️ Data Storage
+
+- **Global Commands**: Stored in VS Code global settings
+- **Workspace Commands**: Stored in each workspace settings
+- **Execution History**: Stored in global settings (max 100 entries)
+- **Directory Structure**: Stored in same scope as commands
+
+## 🛠️ Development
+
+### Requirements
+
+- Node.js 16+
+- npm
+
+### Setup
+
+```bash
+# Install dependencies
+npm install
+
+# Build
+npm run build
+
+# Run tests
+npm test
+
+# Development mode (watch files)
+npm run dev
+```
+
+### Testing
+
+```bash
+# Run all tests
+npm test
+
+# Integration tests
+npm test -- --testNamePattern="integration"
+```
+
+## 📝 Changelog
+
+### v0.0.4 (2024-XX-XX) - 🎯 VS Code Command Support
+
+- ✨ **VS Code Command Support**: Execute internal VS Code commands
+- ✨ **Enhanced Registration UX**: 2-step intuitive workflow
+- ✨ **VS Code Command List**: Search and select from available commands
+- ✨ **Command Editing**: Complete editing of existing commands
+- ✨ **Popular Commands**: Priority display of frequently used commands
+- ✨ **Localized Display Names**: Automatic localization of VS Code commands
+- ✨ **Shell History Integration**: Register commands from terminal history
+- 🎨 **UI Improvements**: Command type badges and better organization
+- 🔧 **Argument Support**: Automatic parsing of VS Code command arguments
+- 🌍 **Multi-language Support**: English and Japanese localization
+
+### v0.0.3 (2024-XX-XX) - 📁 Directory Management
+
+- ✨ Directory management functionality
+- ✨ Search functionality
+- ✨ Execution history
+- ✨ Export/Import functionality
+- ✨ Tag functionality
+- 🎨 TreeView UI improvements
+- 📝 Comprehensive integration tests
+
+### v0.0.2 (2024-XX-XX)
+
+- 🐛 TreeView favorites functionality bug fixes
+- 🐛 Command execution argument processing improvements
+- ✅ Integration test additions
+
+### v0.0.1 (2024-XX-XX)
+
+- 🎉 Initial release
+- ✨ Basic command management functionality
+- ✨ Favorites functionality
+- ✨ Dynamic input forms
+
+## 🆘 Troubleshooting
+
+### Panel Not Showing
+
+1. **Check ViewContainer**
+
+   - Look for **terminal icon** in sidebar activity bar
+   - Click this icon to open "Quick Command" panel
+
+2. **Reload Extension**
+
+   ```
+   Command Palette → "Developer: Reload Window"
+   ```
+
+3. **Create Sample Data**
+   ```
+   Command Palette → "Quick Command: Create Sample Commands"
+   ```
+
+### Common Issues
+
+1. **VS Code Commands Not Executing**
+
+   - Verify command type is set to "VS Code"
+   - Check command name is exact (case-sensitive)
+
+2. **Terminal Commands Not Working**
+
+   - Verify command type is set to "Terminal"
+   - Check if terminal is available
+
+3. **Empty Command List**
+   - Run sample command creation
+   - Check debug info: `Command Palette → "Quick Command: Debug TreeView"`
+
+## 🤝 Contributing
+
+Pull requests and issue reports are welcome!
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Support
+
+If you have problems or questions, please let us know on the GitHub [Issues](https://github.com/your-repo/quick-command/issues) page.
+
+---
+
+**Quick Command** - Make your VS Code command execution more efficient! 🚀

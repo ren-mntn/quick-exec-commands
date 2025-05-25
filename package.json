@@ -1,58 +1,137 @@
 {
   "name": "quick-command",
   "displayName": "Quick Command",
-  "description": "コマンドを効率的に管理・実行するVS Code拡張機能",
-  "version": "0.0.1",
+  "description": "Efficiently manage and execute terminal & VS Code commands with a unified interface",
+  "version": "0.0.3",
+  "icon": "asset/icon.png",
   "engines": {
     "vscode": "^1.74.0"
   },
   "categories": [
     "Other"
   ],
+  "keywords": [
+    "command",
+    "terminal",
+    "productivity",
+    "workflow",
+    "automation",
+    "quick",
+    "execute",
+    "manage"
+  ],
+  "publisher": "otter-botter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ren-mntn/quick-command.git"
+  },
+  "homepage": "https://github.com/ren-mntn/quick-command#readme",
+  "bugs": {
+    "url": "https://github.com/ren-mntn/quick-command/issues"
+  },
+  "license": "MIT",
   "activationEvents": [
-    "onCommand:quick-command.showPanel",
-    "onCommand:quick-command.showCommandList"
+    "*"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "quick-command.showPanel",
-        "title": "Quick Command: パネルを表示"
+        "title": "%command.showPanel%"
       },
       {
         "command": "quick-command.showCommandList",
-        "title": "Quick Command: コマンドリストを表示"
+        "title": "%command.showCommandList%"
       },
       {
         "command": "quick-command.addCommand",
-        "title": "Quick Command: コマンドを追加"
-      },
-      {
-        "command": "quick-command.executeCommand",
-        "title": "Quick Command: コマンドを実行"
+        "title": "%command.addCommand%",
+        "icon": "$(plus)"
       },
       {
         "command": "quick-command.deleteCommand",
-        "title": "Quick Command: コマンドを削除"
+        "title": "%command.deleteCommand%"
       },
       {
         "command": "quick-command.toggleFavorite",
-        "title": "Quick Command: お気に入り切り替え"
+        "title": "%command.toggleFavorite%",
+        "icon": "$(star)"
+      },
+      {
+        "command": "quick-command.addDirectory",
+        "title": "%command.addDirectory%",
+        "icon": "$(new-folder)"
+      },
+      {
+        "command": "quick-command.addCommandToDirectory",
+        "title": "%command.addCommandToDirectory%",
+        "icon": "$(plus)"
+      },
+      {
+        "command": "quick-command.deleteDirectory",
+        "title": "%command.deleteDirectory%"
+      },
+      {
+        "command": "quick-command.toggleDirectoryExpansion",
+        "title": "%command.toggleDirectoryExpansion%"
+      },
+      {
+        "command": "quick-command.editCommand",
+        "title": "%command.editCommand%"
+      },
+      {
+        "command": "quick-command.exportCommands",
+        "title": "%command.exportCommands%"
+      },
+      {
+        "command": "quick-command.importCommands",
+        "title": "%command.importCommands%"
+      },
+      {
+        "command": "quick-command.searchCommands",
+        "title": "%command.searchCommands%",
+        "icon": "$(search)"
+      },
+      {
+        "command": "quick-command.showHistory",
+        "title": "%command.showHistory%"
+      },
+      {
+        "command": "quick-command.debugTreeView",
+        "title": "%command.debugTreeView%"
+      },
+      {
+        "command": "quick-command.createSampleCommands",
+        "title": "%command.createSampleCommands%"
       }
     ],
     "keybindings": [
       {
         "command": "quick-command.showCommandList",
-        "key": "ctrl+shift+k",
-        "mac": "cmd+shift+k"
+        "key": "ctrl+shift+x",
+        "mac": "cmd+shift+x"
+      },
+      {
+        "command": "quick-command.searchCommands",
+        "key": "ctrl+shift+f",
+        "mac": "cmd+shift+f"
       }
     ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "quick-command",
+          "title": "%viewContainer.quickCommand%",
+          "icon": "$(terminal)"
+        }
+      ]
+    },
     "views": {
-      "explorer": [
+      "quick-command": [
         {
           "id": "quickCommandPanel",
-          "name": "Quick Command",
+          "name": "%view.quickCommandPanel%",
           "when": "true"
         }
       ]
@@ -60,25 +139,99 @@
     "viewsWelcome": [
       {
         "view": "quickCommandPanel",
-        "contents": "コマンドを管理してください。\n[コマンドを追加](command:quick-command.addCommand)"
+        "contents": "%viewWelcome.content%",
+        "when": "view == quickCommandPanel"
       }
     ],
     "menus": {
+      "commandPalette": [
+        {
+          "command": "quick-command.deleteCommand",
+          "when": "false"
+        },
+        {
+          "command": "quick-command.toggleFavorite",
+          "when": "false"
+        },
+        {
+          "command": "quick-command.addCommandToDirectory",
+          "when": "false"
+        },
+        {
+          "command": "quick-command.deleteDirectory",
+          "when": "false"
+        },
+        {
+          "command": "quick-command.toggleDirectoryExpansion",
+          "when": "false"
+        },
+        {
+          "command": "quick-command.editCommand",
+          "when": "false"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "quick-command.addCommand",
+          "when": "view == quickCommandPanel",
+          "group": "navigation@1"
+        },
+        {
+          "command": "quick-command.addDirectory",
+          "when": "view == quickCommandPanel",
+          "group": "navigation@2"
+        },
+        {
+          "command": "quick-command.searchCommands",
+          "when": "view == quickCommandPanel",
+          "group": "navigation@3"
+        }
+      ],
       "view/item/context": [
         {
-          "command": "quick-command.executeCommand",
+          "command": "quick-command.toggleFavorite",
           "when": "view == quickCommandPanel && viewItem == quickCommand",
           "group": "inline@1"
         },
         {
-          "command": "quick-command.toggleFavorite",
-          "when": "view == quickCommandPanel && viewItem == quickCommand",
+          "command": "quick-command.addCommandToDirectory",
+          "when": "view == quickCommandPanel && viewItem =~ /.*Category$/",
+          "group": "inline@1"
+        },
+        {
+          "command": "quick-command.addDirectory",
+          "when": "view == quickCommandPanel && viewItem =~ /.*Category$/",
           "group": "inline@2"
+        },
+        {
+          "command": "quick-command.addCommandToDirectory",
+          "when": "view == quickCommandPanel && viewItem == commandDirectory",
+          "group": "inline@1"
+        },
+        {
+          "command": "quick-command.editCommand",
+          "when": "view == quickCommandPanel && viewItem == quickCommand",
+          "group": "command@1"
         },
         {
           "command": "quick-command.deleteCommand",
           "when": "view == quickCommandPanel && viewItem == quickCommand",
-          "group": "inline@3"
+          "group": "command@2"
+        },
+        {
+          "command": "quick-command.deleteDirectory",
+          "when": "view == quickCommandPanel && viewItem == commandDirectory",
+          "group": "command@1"
+        },
+        {
+          "command": "quick-command.exportCommands",
+          "when": "view == quickCommandPanel && viewItem =~ /.*Category$/",
+          "group": "export@1"
+        },
+        {
+          "command": "quick-command.importCommands",
+          "when": "view == quickCommandPanel && viewItem =~ /.*Category$/",
+          "group": "export@2"
         }
       ]
     }
@@ -89,7 +242,9 @@
     "dev": "webpack --mode development --watch",
     "test": "jest",
     "lint": "eslint src --ext ts,tsx",
-    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx}\""
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx}\"",
+    "package": "vsce package",
+    "publish": "vsce publish"
   },
   "devDependencies": {
     "@types/vscode": "^1.74.0",

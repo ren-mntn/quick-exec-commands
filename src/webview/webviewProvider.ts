@@ -15,13 +15,13 @@ export class WebviewProvider implements vscode.WebviewViewProvider {
   public resolveWebviewView(
     webviewView: vscode.WebviewView,
     context: vscode.WebviewViewResolveContext,
-    _token: vscode.CancellationToken,
+    _token: vscode.CancellationToken
   ) {
     this._view = webviewView;
 
     webviewView.webview.options = {
       enableScripts: true,
-      localResourceRoots: [this._extensionUri]
+      localResourceRoots: [this._extensionUri],
     };
 
     webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
@@ -33,8 +33,68 @@ export class WebviewProvider implements vscode.WebviewViewProvider {
           const commands = await this.commandManager.getAllCommands();
           webviewView.webview.postMessage({
             type: 'commandsLoaded',
-            payload: commands
+            payload: commands,
           });
+          break;
+
+        case 'getVSCodeCommands':
+          try {
+            const availableCommands = await vscode.commands.getCommands(true);
+            const popularCommands = [
+              'workbench.action.files.save',
+              'workbench.action.files.saveAll',
+              'workbench.action.quickOpen',
+              'workbench.action.showCommands',
+              'workbench.action.toggleSidebarVisibility',
+              'workbench.action.togglePanel',
+              'editor.action.formatDocument',
+              'workbench.action.reloadWindow',
+              'workbench.action.openSettings',
+              'workbench.action.openKeybindings',
+              'workbench.view.explorer',
+              'workbench.view.search',
+              'workbench.view.scm',
+              'workbench.view.debug',
+              'workbench.view.extensions',
+            ];
+
+            const commandList = [
+              ...popularCommands.map((cmd) => ({
+                command: cmd,
+                popular: true,
+              })),
+              ...availableCommands
+                .filter((cmd) => !popularCommands.includes(cmd))
+                .sort()
+                .map((cmd) => ({ command: cmd, popular: false })),
+            ];
+
+            webviewView.webview.postMessage({
+              type: 'vscodeCommandsLoaded',
+              payload: commandList,
+            });
+          } catch (error) {
+            webviewView.webview.postMessage({
+              type: 'vscodeCommandsLoaded',
+              payload: { error: (error as Error).message },
+            });
+          }
+          break;
+
+        case 'getShellHistory':
+          try {
+            const suggestedCommands =
+              await this.commandManager.getSuggestedCommands();
+            webviewView.webview.postMessage({
+              type: 'shellHistoryLoaded',
+              payload: suggestedCommands,
+            });
+          } catch (error) {
+            webviewView.webview.postMessage({
+              type: 'shellHistoryLoaded',
+              payload: { error: (error as Error).message },
+            });
+          }
           break;
 
         case 'addCommand':
@@ -42,18 +102,18 @@ export class WebviewProvider implements vscode.WebviewViewProvider {
             await this.commandManager.addCommand(message.payload);
             webviewView.webview.postMessage({
               type: 'commandAdded',
-              payload: { success: true }
+              payload: { success: true },
             });
             // コマンド一覧を再送信
             const updatedCommands = await this.commandManager.getAllCommands();
             webviewView.webview.postMessage({
               type: 'commandsLoaded',
-              payload: updatedCommands
+              payload: updatedCommands,
             });
           } catch (error) {
             webviewView.webview.postMessage({
               type: 'commandAdded',
-              payload: { success: false, error: (error as Error).message }
+              payload: { success: false, error: (error as Error).message },
             });
           }
           break;
@@ -62,7 +122,9 @@ export class WebviewProvider implements vscode.WebviewViewProvider {
           try {
             await this.commandManager.executeCommand(message.payload);
           } catch (error) {
-            vscode.window.showErrorMessage(`コマンド実行エラー: ${(error as Error).message}`);
+            vscode.window.showErrorMessage(
+              `コマンド実行エラー: ${(error as Error).message}`
+            );
           }
           break;
 
@@ -72,10 +134,12 @@ export class WebviewProvider implements vscode.WebviewViewProvider {
             const updatedCommands = await this.commandManager.getAllCommands();
             webviewView.webview.postMessage({
               type: 'commandsLoaded',
-              payload: updatedCommands
+              payload: updatedCommands,
             });
           } catch (error) {
-            vscode.window.showErrorMessage(`コマンド削除エラー: ${(error as Error).message}`);
+            vscode.window.showErrorMessage(
+              `コマンド削除エラー: ${(error as Error).message}`
+            );
           }
           break;
 
@@ -85,10 +149,35 @@ export class WebviewProvider implements vscode.WebviewViewProvider {
             const updatedCommands = await this.commandManager.getAllCommands();
             webviewView.webview.postMessage({
               type: 'commandsLoaded',
-              payload: updatedCommands
+              payload: updatedCommands,
             });
           } catch (error) {
-            vscode.window.showErrorMessage(`お気に入り切り替えエラー: ${(error as Error).message}`);
+            vscode.window.showErrorMessage(
+              `お気に入り切り替えエラー: ${(error as Error).message}`
+            );
+          }
+          break;
+
+        case 'editCommand':
+          try {
+            await this.commandManager.updateCommand(
+              message.payload.id,
+              message.payload.updates
+            );
+            const updatedCommands = await this.commandManager.getAllCommands();
+            webviewView.webview.postMessage({
+              type: 'commandsLoaded',
+              payload: updatedCommands,
+            });
+            webviewView.webview.postMessage({
+              type: 'commandEdited',
+              payload: { success: true },
+            });
+          } catch (error) {
+            webviewView.webview.postMessage({
+              type: 'commandEdited',
+              payload: { success: false, error: (error as Error).message },
+            });
           }
           break;
       }
@@ -102,7 +191,9 @@ export class WebviewProvider implements vscode.WebviewViewProvider {
   }
 
   private _getHtmlForWebview(webview: vscode.Webview) {
-    const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'dist', 'webview', 'webview.js'));
+    const scriptUri = webview.asWebviewUri(
+      vscode.Uri.joinPath(this._extensionUri, 'dist', 'webview', 'webview.js')
+    );
     const nonce = getNonce();
 
     return `<!DOCTYPE html>
@@ -138,9 +229,10 @@ export class WebviewProvider implements vscode.WebviewViewProvider {
 
 function getNonce() {
   let text = '';
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const possible =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   for (let i = 0; i < 32; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
   return text;
-} 
+}
