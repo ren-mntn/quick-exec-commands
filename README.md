@@ -2,6 +2,10 @@
 
 ![Quick Execute Commands](./asset/top.webp)
 
+[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/ren-mntn.quick-exec-commands?style=for-the-badge&logo=visual-studio-code&logoColor=white&label=VS%20Code%20Marketplace&labelColor=0078d4&color=4caf50)](https://marketplace.visualstudio.com/items?itemName=ren-mntn.quick-exec-commands)
+[![Downloads](https://img.shields.io/visual-studio-marketplace/d/ren-mntn.quick-exec-commands?style=for-the-badge&logo=microsoft&logoColor=white&label=Downloads&labelColor=0078d4&color=ff9800)](https://marketplace.visualstudio.com/items?itemName=ren-mntn.quick-exec-commands)
+[![Rating](https://img.shields.io/visual-studio-marketplace/r/ren-mntn.quick-exec-commands?style=for-the-badge&logo=microsoft&logoColor=white&label=Rating&labelColor=0078d4&color=ffc107)](https://marketplace.visualstudio.com/items?itemName=ren-mntn.quick-exec-commands)
+
 > [📖 日本語版はこちら / Japanese Version](./README.ja.md)
 
 ## 🚀 **ショートカットキーの悩み、もう終わり！**
@@ -79,10 +83,22 @@ _`Cmd+Shift+X` でコマンドパレット風に即アクセス_
 
 ## 🚀 **5 分で使い始められる！**
 
-1. **インストール** → 拡張機能をインストール
-2. **起動** → `Cmd+Shift+X` でコマンド一覧表示
-3. **登録** → 「➕ コマンド追加」でよく使うコマンドを追加
-4. **実行** → コマンドを選択するだけ！
+### 📥 **簡単インストール**
+
+**方法 1: VS Code 内でインストール**
+
+1. `Ctrl+Shift+X` (Windows/Linux) または `Cmd+Shift+X` (Mac) で拡張機能パネルを開く
+2. "Quick Execute Commands" で検索
+3. 「インストール」をクリック
+
+**方法 2: Marketplace からインストール**
+[![Install Now](https://img.shields.io/badge/Install%20Now-VS%20Code%20Marketplace-blue?style=for-the-badge&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=ren-mntn.quick-exec-commands)
+
+### ⚡ **クイックスタート**
+
+1. **起動** → `Cmd+Shift+X` でコマンド一覧表示
+2. **登録** → 「➕ コマンド追加」でよく使うコマンドを追加
+3. **実行** → コマンドを選択するだけ！
 
 **今すぐ試して、作業効率の劇的変化を体験してください！**
 

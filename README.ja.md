@@ -2,6 +2,108 @@
 
 ![Quick Execute Commands](./asset/top.webp)
 
+[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/ren-mntn.quick-exec-commands?style=for-the-badge&logo=visual-studio-code&logoColor=white&label=VS%20Code%20Marketplace&labelColor=0078d4&color=4caf50)](https://marketplace.visualstudio.com/items?itemName=ren-mntn.quick-exec-commands)
+[![Downloads](https://img.shields.io/visual-studio-marketplace/d/ren-mntn.quick-exec-commands?style=for-the-badge&logo=microsoft&logoColor=white&label=Downloads&labelColor=0078d4&color=ff9800)](https://marketplace.visualstudio.com/items?itemName=ren-mntn.quick-exec-commands)
+[![Rating](https://img.shields.io/visual-studio-marketplace/r/ren-mntn.quick-exec-commands?style=for-the-badge&logo=microsoft&logoColor=white&label=Rating&labelColor=0078d4&color=ffc107)](https://marketplace.visualstudio.com/items?itemName=ren-mntn.quick-exec-commands)
+
+## 🚀 **ショートカットキーの悩み、もう終わり！**
+
+**たった 1 つのショートカット** `Cmd+Shift+X` だけ覚えれば、あなたのすべてのコマンドにアクセス可能！
+
+---
+
+## ✨ **3 つの魅力で作業効率が劇的 UP**
+
+### 🗂️ **1. ネスト構造で整理整頓**
+
+```
+📁 開発環境
+  ├── 📁 Git操作
+  │   ├── 🖥️ git status
+  │   └── 🖥️ git commit -m [メッセージ]
+  ├── 📁 Docker
+  │   └── 🖥️ docker-compose up
+  └── ⚙️ VS Code: ターミナルを開く
+```
+
+**もうコマンドを探し回る必要なし！** フォルダ分けして、すっきり管理
+
+---
+
+### ⚡ **2. ターミナル + VS Code、両方対応**
+
+| **ターミナルコマンド** | **VS Code コマンド** |
+| ---------------------- | -------------------- |
+| `npm start`            | ファイル保存         |
+| `git push`             | サイドバー切り替え   |
+| `docker build`         | コマンドパレット表示 |
+
+**1 つの拡張機能で、すべて完結！**
+
+---
+
+### 🎯 **3. 動的入力で柔軟性抜群**
+
+![Dynamic Input Demo](./demos/dynamic-input-demo.gif)
+_↑ コマンドに `[変数名]` を入れると、実行時に入力フォームが表示！_
+
+```bash
+git commit -m "[コミットメッセージ]"
+docker run --name [コンテナ名] [イメージ名]
+```
+
+**決まりきったコマンドも、カスタマイズ可能なコマンドも、これ 1 つで！**
+
+---
+
+## 📱 **直感的な 2 つのインターフェース**
+
+### **🌟 メインパネル（サイドバー）**
+
+![Panel Demo](./demos/panel-demo.gif)
+_整理されたコマンド一覧で、マウスクリックで実行_
+
+### **⚡ クイックアクセス（ショートカット）**
+
+![Quick Access Demo](./demos/quick-access-demo.gif)
+_`Cmd+Shift+X` でコマンドパレット風に即アクセス_
+
+---
+
+## 🎊 **こんな人におすすめ！**
+
+- ✅ **「あのコマンド何だっけ？」** が口癖の人
+- ✅ **ショートカットキーが覚えられない** 人
+- ✅ **プロジェクトごとにコマンドが違って** 混乱する人
+- ✅ **作業を効率化したい** すべての開発者
+
+---
+
+## 🚀 **5 分で使い始められる！**
+
+### 📥 **簡単インストール**
+
+**方法 1: VS Code 内でインストール**
+
+1. `Ctrl+Shift+X` (Windows/Linux) または `Cmd+Shift+X` (Mac) で拡張機能パネルを開く
+2. "Quick Execute Commands" で検索
+3. 「インストール」をクリック
+
+**方法 2: Marketplace からインストール**
+[![Install Now](https://img.shields.io/badge/Install%20Now-VS%20Code%20Marketplace-blue?style=for-the-badge&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=ren-mntn.quick-exec-commands)
+
+### ⚡ **クイックスタート**
+
+1. **起動** → `Cmd+Shift+X` でコマンド一覧表示
+2. **登録** → 「➕ コマンド追加」でよく使うコマンドを追加
+3. **実行** → コマンドを選択するだけ！
+
+**今すぐ試して、作業効率の劇的変化を体験してください！**
+
+---
+
+# 詳細機能
+
 VS Code でコマンドを効率的に管理・実行するための拡張機能です。**ターミナルコマンド**と **VS Code 内部コマンド**の両方をサポートし、統一されたインターフェースで管理できます。
 
 ## 🌟 主な特徴
