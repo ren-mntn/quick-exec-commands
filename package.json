@@ -20,7 +20,7 @@
     "execute",
     "manage"
   ],
-  "publisher": "otter-botter",
+  "publisher": "ren-mntn",
   "repository": {
     "type": "git",
     "url": "https://github.com/ren-mntn/quick-exec-commands.git"
