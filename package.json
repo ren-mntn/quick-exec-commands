@@ -3,9 +3,9 @@
   "displayName": "Quick Command",
   "description": "Efficiently manage and execute terminal & VS Code commands with a unified interface",
   "version": "0.0.3",
-  "icon": "asset/icon.png",
+  "icon": "asset/icon.webp",
   "engines": {
-    "vscode": "^1.74.0"
+    "vscode": "^1.75.0"
   },
   "categories": [
     "Other"
@@ -30,9 +30,6 @@
     "url": "https://github.com/ren-mntn/quick-command/issues"
   },
   "license": "MIT",
-  "activationEvents": [
-    "*"
-  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
@@ -247,7 +244,7 @@
     "publish": "vsce publish"
   },
   "devDependencies": {
-    "@types/vscode": "^1.74.0",
+    "@types/vscode": "^1.75.0",
     "@types/node": "16.x",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",

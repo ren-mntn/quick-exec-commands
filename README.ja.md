@@ -1,6 +1,6 @@
 # Quick Command
 
-![Quick Command](./asset/top.png)
+![Quick Command](./asset/top.webp)
 
 VS Code でコマンドを効率的に管理・実行するための拡張機能です。**ターミナルコマンド**と **VS Code 内部コマンド**の両方をサポートし、統一されたインターフェースで管理できます。
 

@@ -1,6 +1,6 @@
 # Quick Command
 
-![Quick Command](./asset/top.png)
+![Quick Command](./asset/top.webp)
 
 > [📖 日本語版はこちら / Japanese Version](./README.ja.md)
 
