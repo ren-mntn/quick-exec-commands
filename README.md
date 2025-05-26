@@ -8,103 +8,103 @@
 
 > [📖 日本語版はこちら / Japanese Version](./README.ja.md)
 
-## 🚀 **ショートカットキーの悩み、もう終わり！**
+## 🚀 **No More Shortcut Key Worries!**
 
-**たった 1 つのショートカット** `Ctrl+Alt+Q` だけ覚えれば、あなたのすべてのコマンドにアクセス可能！
+Access all your commands with just **one shortcut** `Ctrl+Alt+Q`!
 
 ---
 
-## ✨ **3 つの魅力で作業効率が劇的 UP**
+## ✨ **Drastically Boost Your Productivity with These 3 Key Features**
 
-### 🗂️ **1. ネスト構造で整理整頓**
+### 🗂️ **1. Organize with Nested Structures**
 
 ```
-📁 開発環境
-  ├── 📁 Git操作
+📁 Development Environment
+  ├── 📁 Git Operations
   │   ├── 🖥️ git status
-  │   └── 🖥️ git commit -m [メッセージ]
+  │   └── 🖥️ git commit -m [message]
   ├── 📁 Docker
   │   └── 🖥️ docker-compose up
-  └── ⚙️ VS Code: ターミナルを開く
+  └── ⚙️ VS Code: Open Terminal
 ```
 
-**もうコマンドを探し回る必要なし！** フォルダ分けして、すっきり管理
+**No more searching for commands!** Manage them neatly with folders.
 
 ---
 
-### ⚡ **2. ターミナル + VS Code、両方対応**
+### ⚡ **2. Supports Both Terminal & VS Code Commands**
 
-| **ターミナルコマンド** | **VS Code コマンド** |
-| ---------------------- | -------------------- |
-| `npm start`            | ファイル保存         |
-| `git push`             | サイドバー切り替え   |
-| `docker build`         | コマンドパレット表示 |
+| **Terminal Command** | **VS Code Command**  |
+| -------------------- | -------------------- |
+| `npm start`          | Save File            |
+| `git push`           | Toggle Sidebar       |
+| `docker build`       | Show Command Palette |
 
-**1 つの拡張機能で、すべて完結！**
+**Everything in one extension!**
 
 ---
 
-### 🎯 **3. 動的入力で柔軟性抜群**
+### 🎯 **3. Outstanding Flexibility with Dynamic Inputs**
 
 ![Dynamic Input Demo](./demos/dynamic-input-demo.gif)
-_↑ コマンドに `[変数名]` を入れると、実行時に入力フォームが表示！_
+_↑ Include `[variable_name]` in your command, and an input form will appear at runtime!_
 
 ```bash
-git commit -m "[コミットメッセージ]"
-docker run --name [コンテナ名] [イメージ名]
+git commit -m "[commit_message]"
+docker run --name [container_name] [image_name]
 ```
 
-**決まりきったコマンドも、カスタマイズ可能なコマンドも、これ 1 つで！**
+**Handle both fixed and customizable commands with this single tool!**
 
 ---
 
-## 📱 **直感的な 2 つのインターフェース**
+## 📱 **Two Intuitive Interfaces**
 
-### **🌟 メインパネル（サイドバー）**
+### **🌟 Main Panel (Sidebar)**
 
 ![Panel Demo](./demos/panel-demo.gif)
-_整理されたコマンド一覧で、マウスクリックで実行_
+_Execute commands with a mouse click from an organized list._
 
-### **⚡ クイックアクセス（ショートカット）**
+### **⚡ Quick Access (Shortcut)**
 
 ![Quick Access Demo](./demos/quick-access-demo.gif)
-_`Ctrl+Alt+Q` でコマンドパレット風に即アクセス_
+_Instantly access commands like a command palette with `Ctrl+Alt+Q`._
 
 ---
 
-## 🎊 **こんな人におすすめ！**
+## 🎊 **Recommended for People Who:**
 
-- ✅ **「あのコマンド何だっけ？」** が口癖の人
-- ✅ **ショートカットキーが覚えられない** 人
-- ✅ **プロジェクトごとにコマンドが違って** 混乱する人
-- ✅ **作業を効率化したい** すべての開発者
+- ✅ Often ask, **"What was that command again?"**
+- ✅ **Can't remember shortcut keys.**
+- ✅ Get **confused by different commands** for each project.
+- ✅ All developers who want to **improve their workflow efficiency.**
 
 ---
 
-## 🚀 **5 分で使い始められる！**
+## 🚀 **Get Started in 5 Minutes!**
 
-### 📥 **簡単インストール**
+### 📥 **Easy Installation**
 
-**方法 1: VS Code 内でインストール**
+**Method 1: Install within VS Code**
 
-1. `Ctrl+Alt+Q` で拡張機能パネルを開く
-2. "Quick Execute Commands" で検索
-3. 「インストール」をクリック
+1. Open the Extensions view (`Ctrl+Shift+X` or `Cmd+Shift+X`)
+2. Search for "Quick Execute Commands"
+3. Click "Install"
 
-**方法 2: Marketplace からインストール**
+**Method 2: Install from Marketplace**
 [![Install Now](https://img.shields.io/badge/Install%20Now-VS%20Code%20Marketplace-blue?style=for-the-badge&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=ren-mntn.quick-exec-commands)
 
-### ⚡ **クイックスタート**
+### ⚡ **Quick Start**
 
-1. **起動** → `Ctrl+Alt+Q` でコマンド一覧表示
-2. **登録** → 「➕ コマンド追加」でよく使うコマンドを追加
-3. **実行** → コマンドを選択するだけ！
+1. **Launch** → Display command list with `Ctrl+Alt+Q`
+2. **Register** → Add frequently used commands with "➕ Add Command"
+3. **Execute** → Simply select the command!
 
-**今すぐ試して、作業効率の劇的変化を体験してください！**
+**Try it now and experience a dramatic change in your work efficiency!**
 
 ---
 
-# 詳細機能
+# Detailed Features
 
 A VS Code extension for efficiently managing and executing both **terminal commands** and **VS Code internal commands** with a unified interface.
 
