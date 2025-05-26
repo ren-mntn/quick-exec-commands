@@ -520,9 +520,6 @@ export function activate(context: vscode.ExtensionContext) {
         try {
           await commandManager.toggleFavorite(command.id);
           quickCommandProvider.refresh();
-          vscode.window.showInformationMessage(
-            `お気に入りを切り替えました: ${command.name || command.command}`
-          );
         } catch (error) {
           console.error('[Extension] toggleFavorite error:', error);
           vscode.window.showErrorMessage(

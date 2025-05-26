@@ -38,6 +38,15 @@ export class QuickCommandProvider implements vscode.TreeDataProvider<TreeItem> {
         '[QuickCommandProvider] Favorite commands count:',
         favoriteCommands.length
       );
+      console.log(
+        '[QuickCommandProvider] Favorite commands:',
+        favoriteCommands.map((cmd) => ({
+          id: cmd.id,
+          name: cmd.name,
+          command: cmd.command,
+          isFavorite: cmd.isFavorite,
+        }))
+      );
 
       const globalCommands = this.commandManager.getGlobalCommands();
       const globalDirectories = this.commandManager.getGlobalDirectories();
@@ -58,12 +67,10 @@ export class QuickCommandProvider implements vscode.TreeDataProvider<TreeItem> {
         workspaceDirectories.length
       );
 
-      // 常にカテゴリを表示（空でも）
-      if (favoriteCommands.length > 0) {
-        items.push(
-          new CategoryTreeItem('Favorites', 'favorite', favoriteCommands)
-        );
-      }
+      // お気に入りカテゴリは常に表示
+      items.push(
+        new CategoryTreeItem('Favorites', 'favorite', favoriteCommands)
+      );
 
       // グローバルカテゴリは常に表示
       items.push(
@@ -119,13 +126,16 @@ export class QuickCommandProvider implements vscode.TreeDataProvider<TreeItem> {
         }
       }
 
-      // ルートレベルのコマンドを追加
-      const rootCommands = element.commands.filter((cmd) => !cmd.directory);
+      // コマンドを追加（お気に入りカテゴリの場合はディレクトリに関係なくすべて表示）
+      const commandsToShow =
+        element.category === 'favorite'
+          ? element.commands
+          : element.commands.filter((cmd) => !cmd.directory);
       console.log(
-        '[QuickCommandProvider] Root commands in category:',
-        rootCommands.length
+        '[QuickCommandProvider] Commands in category:',
+        commandsToShow.length
       );
-      for (const command of rootCommands) {
+      for (const command of commandsToShow) {
         items.push(new CommandTreeItem(command));
       }
 
@@ -246,14 +256,12 @@ export class CommandTreeItem extends vscode.TreeItem {
     });
   }
 
-  private getCommandIcon(): vscode.ThemeIcon {
+  private getCommandIcon(): vscode.ThemeIcon | undefined {
     if (this.quickCommand.isFavorite) {
       return new vscode.ThemeIcon('star-full');
-    } else if (this.quickCommand.commandType === 'vscode') {
-      return new vscode.ThemeIcon('symbol-method');
-    } else {
-      return new vscode.ThemeIcon('terminal');
     }
+    // お気に入りでない場合はアイコンを非表示
+    return undefined;
   }
 
   private createTooltip(): string {
