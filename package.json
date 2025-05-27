@@ -2,7 +2,7 @@
   "name": "quick-exec-commands",
   "displayName": "Quick Execute Commands",
   "description": "Efficiently manage and execute terminal & VS Code commands with a unified interface",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "icon": "asset/icon.webp",
   "engines": {
     "vscode": "^1.75.0"

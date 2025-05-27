@@ -306,6 +306,7 @@ export class DirectoryTreeItem extends vscode.TreeItem {
 
     this.tooltip = this.createTooltip();
     this.description = directory.description;
+    // 確実にコンテキストバリューを設定
     this.contextValue = 'commandDirectory';
 
     // アイコンの設定

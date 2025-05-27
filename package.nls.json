@@ -20,7 +20,7 @@
   "viewContainer.quickCommand": "Quick Command",
   "viewWelcome.content": "Welcome to Quick Command!\n\nManage your commands and streamline your workflow.\n\n[Add Command](command:quickExecCommands.addCommand)\n[Add Directory](command:quickExecCommands.addDirectory)\n[Create Sample Commands](command:quickExecCommands.createSampleCommands)\n[Create Demo Commands](command:quickExecCommands.createDemoCommands)",
   "message.commandRequired": "Command is required",
-  "message.confirmDeleteDirectory": "Are you sure you want to delete directory \"{0}\"?\n(All commands inside will also be deleted)",
+  "message.confirmDeleteDirectory": "Are you sure you want to delete the directory '{0}'? All commands and subdirectories within it will also be permanently deleted.",
   "message.delete": "Delete",
   "message.cancel": "Cancel",
   "message.directoryDeleted": "Directory \"{0}\" has been deleted",

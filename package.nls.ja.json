@@ -20,7 +20,7 @@
   "viewContainer.quickCommand": "Quick Command",
   "viewWelcome.content": "Quick Commandへようこそ！\n\nコマンドを管理してワークフローを効率化しましょう。\n\n[コマンドを追加](command:quickExecCommands.addCommand)\n[ディレクトリを追加](command:quickExecCommands.addDirectory)\n[サンプルコマンドを作成](command:quickExecCommands.createSampleCommands)\n[デモ用コマンドを作成](command:quickExecCommands.createDemoCommands)",
   "message.commandRequired": "コマンドは必須です",
-  "message.confirmDeleteDirectory": "ディレクトリ「{0}」を削除しますか？\n（内部のコマンドも削除されます）",
+  "message.confirmDeleteDirectory": "ディレクトリ「{0}」を削除してもよろしいですか？内部のすべてのコマンドとサブディレクトリも完全に削除されます。",
   "message.delete": "削除",
   "message.cancel": "キャンセル",
   "message.directoryDeleted": "ディレクトリ「{0}」を削除しました",
