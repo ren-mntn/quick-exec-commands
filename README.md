@@ -374,23 +374,24 @@ npm test -- --testNamePattern="integration"
 - 🔧 **Argument Support**: Automatic parsing of VS Code command arguments
 - 🌍 **Multi-language Support**: English and Japanese localization
 
-### v0.0.3 (2024-XX-XX) - 📁 Directory Management
+### v0.0.3 (2025-05-27) - 📁 Directory Management & Localization Fix
 
-- ✨ Directory management functionality
-- ✨ Search functionality
-- ✨ Execution history
-- ✨ Export/Import functionality
-- ✨ Tag functionality
-- 🎨 TreeView UI improvements
-- 📝 Comprehensive integration tests
+- ✨ Added directory management features
+- ✨ Added search functionality
+- ✨ Added execution history feature
+- ✨ Added export/import functionality
+- ✨ Added tagging feature
+- 🎨 Improved TreeView UI
+- 📝 Added comprehensive integration tests
+- 🐛 Fixed localization for directory deletion confirmation message and improved wording.
 
-### v0.0.2 (2024-XX-XX)
+### v0.0.2 (2025-05-26)
 
 - 🐛 TreeView favorites functionality bug fixes
 - 🐛 Command execution argument processing improvements
 - ✅ Integration test additions
 
-### v0.0.1 (2024-XX-XX)
+### v0.0.1 (2025-05-25)
 
 - 🎉 Initial release
 - ✨ Basic command management functionality
